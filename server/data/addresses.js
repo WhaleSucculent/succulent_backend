@@ -1,0 +1,40 @@
+const addresses = [
+  {
+    firstName: 'Bibbie',
+    lastName: 'McGorley',
+    address: '6 Dakota Lane',
+    apartment: '869 Hansons Point',
+    city: 'Veliki Preslav',
+    country: 'Bulgaria',
+    state: null,
+    zipcode: '7740',
+    phone1: '141-240-4785',
+    phone2: '308-665-1285',
+  },
+  {
+    firstName: 'Haleigh',
+    lastName: 'Dealtry',
+    address: '796 Mesta Hill',
+    apartment: '22 Barby Pass',
+    city: 'Sorochinsk',
+    country: 'Russia',
+    state: null,
+    zipcode: '461949',
+    phone1: '185-399-4850',
+    phone2: '881-364-0267',
+  },
+  {
+    firstName: 'Gretta',
+    lastName: 'Romaint',
+    address: '30835 Monica Drive',
+    apartment: '29174 Hanson Street',
+    city: 'Ash Shaykh Zuwayd',
+    country: 'Egypt',
+    state: null,
+    zipcode: null,
+    phone1: '384-384-0188',
+    phone2: '263-398-9074',
+  },
+];
+
+export default addresses
