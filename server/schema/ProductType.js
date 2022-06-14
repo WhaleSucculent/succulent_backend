@@ -11,16 +11,11 @@ import dateScalar from './CustomScalar.js';
 
 // Category Type
 
-const CategoryType = new GraphQLObjectType({
-  name: 'Category',
-  fields: () => ({
-    name: { type: GraphQLString },
-  }),
-});
 // Size type
 const SizeType = new GraphQLObjectType({
   name: 'Size',
   fields: () => ({
+    id: { type: GraphQLID },
     width: { type: GraphQLString },
     length: { type: GraphQLString },
     height: { type: GraphQLString },
@@ -32,6 +27,7 @@ const SizeType = new GraphQLObjectType({
 const ReviewsType = new GraphQLObjectType({
   name: 'Review',
   fields: () => ({
+    id: { type: GraphQLID },
     postData: { type: dateScalar },
     stars: { type: GraphQLInt },
     title: { type: GraphQLString },
@@ -46,6 +42,7 @@ const ReviewsType = new GraphQLObjectType({
 const StocksType = new GraphQLObjectType({
   name: 'Stocks',
   fields: () => ({
+    id: { type: GraphQLID },
     amount: { type: GraphQLInt },
     action: { type: GraphQLString },
     createTime: { type: dateScalar },
@@ -56,6 +53,7 @@ const StocksType = new GraphQLObjectType({
 const PriceListType = new GraphQLObjectType({
   name: 'PriceList',
   fields: () => ({
+    id: { type: GraphQLID },
     price: { type: GraphQLInt },
     createdTime: { type: dateScalar },
   }),
@@ -71,10 +69,10 @@ const ProductType = new GraphQLObjectType({
     size: {
       type: SizeType,
       resolve(parent, args) {
-        return Product.findById(parent.sizeId);
-      },
+        return SizeType.findBy(parent.id)
+      }
     },
-    category: { type: CategoryType },
+    category: { type: GraphQLString },
     rare: { type: GraphQLBoolean },
     description: { type: GraphQLString },
     // productStatus: {
