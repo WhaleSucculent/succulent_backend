@@ -3,9 +3,9 @@ const AddressType = new GraphQLObjectType({
   name: 'Address',
   fields: () => ({
     id: { type: GraphQLID },
-    // customer: { type: CustomerType, resolve(parent, args) {
-    //   return Customer.findById(parent.customerId)
-    // } },
+    customer: { type: CustomerType, resolve(parent, args) {
+      return Customer.findById(parent.customerId)
+    } },
     firstName: { type: GraphQLString },
     LastName: { type: GraphQLString },
     Address: { type: GraphQLString },
