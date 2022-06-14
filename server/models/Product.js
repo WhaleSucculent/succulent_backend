@@ -8,7 +8,7 @@ const ProductSchema = new mongoose.Schema(
       width: { type: Number },
       length: { type: Number },
       height: { type: Number },
-      radius: { type: Number}
+      radius: { type: Number },
     },
     category: [{ type: String }],
     rare: { type: Boolean },
@@ -20,12 +20,8 @@ const ProductSchema = new mongoose.Schema(
       },
       { timestamps: true },
     ],
-    colors: [
-      {
-        color: { type: String },
-      },
-    ],
-    images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
+    colors: [{ type: String }],
+    // images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     reviews: [
       {
         postData: { type: Date },

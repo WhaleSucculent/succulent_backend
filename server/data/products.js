@@ -1,156 +1,121 @@
 const products = [
   {
-    name: 'Chips - Assorted',
-    postDate: '7/5/2021',
-    size: {
-      width: 27,
-      length: 52,
-      height: 90,
-      radius: 8,
-    },
-    category: 'Masonry & Precast',
-    rare: true,
-    description: 'Poisoning by anticoagulants, assault',
-    productStatus: 'Sold Out',
-    priceList: {
-      price: 96,
-      createdTime: '9/13/2021',
-    },
-    colors: ['Violet', 'Maroon', 'Turquoise', 'Teal', 'Orange'],
-    reviews: {
-      postDate: '1/8/2022',
-      stars: 2,
-      title: "Kellogg's Lewisia",
-      description: '../../../../../../../../../../../etc/passwd%00',
-      customerId: {
-        $oid: '62a755fafc13ae4639000190',
-      },
-    },
-    stock: [
-      {
-        amount: 59,
-        action: 'sold',
-      },
-      {
-        amount: 93,
-        action: 'lose',
-      },
-      {
-        amount: 100,
-        action: 'lose',
-      },
-    ],
-    images: [
-      {
-        $oid: '62a755fafc13ae4639000191',
-      },
-      {
-        $oid: '62a755fafc13ae4639000192',
-      },
-    ],
-  },
-  {
-    name: 'Wine - Cave Springs Dry Riesling',
-    postDate: '4/11/2022',
+    name: 'Muffin Mix - Lemon Cranberry',
+    postDate: '2/22/2022',
     size: {
       width: 3,
-      length: 87,
-      height: 60,
-      radius: 71,
+      length: 14,
+      height: 37,
+      radius: 81,
     },
-    category: 'Glass & Glazing',
+    category: 'Prefabricated Aluminum Metal Canopies',
     rare: false,
-    description:
-      'Military operations involving combat using blunt or piercing object, civilian, subsequent encounter',
+    description: 'Other infective bursitis, left wrist',
     productStatus: 'In Stock',
     priceList: {
-      price: 50,
-      createdTime: '9/18/2021',
+      price: 55,
+      createdTime: '9/13/2021',
     },
-    colors: ['Green', 'Purple', 'Orange', 'Mauv', 'Puce'],
+    colors: ['Mauv', 'Purple', 'Indigo', 'Orange', 'Fuscia'],
     reviews: {
-      postDate: '12/21/2021',
-      stars: 4,
-      title: 'Huachuca Hawkweed',
-      description: '¸˛Ç◊ı˜Â¯˘¿',
-      customerId: {
-        $oid: '62a755fafc13ae4639000193',
-      },
+      postDate: '8/18/2021',
+      stars: 3,
+      title: 'Licorice Weed',
+      description: '0️⃣ 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 9️⃣ 🔟',
+      customerId: '62a7c9f910bb9065d6d40c75',
     },
     stock: [
       {
-        amount: 52,
+        amount: 33,
         action: 'import',
-      },
-    ],
-    images: [
-      {
-        $oid: '62a755fafc13ae4639000194',
-      },
-      {
-        $oid: '62a755fafc13ae4639000195',
-      },
-      {
-        $oid: '62a755fafc13ae4639000196',
       },
     ],
   },
   {
-    name: 'Swiss Chard - Red',
-    postDate: '12/15/2021',
+    name: 'Beef - Texas Style Burger',
+    postDate: '3/6/2022',
     size: {
-      width: 39,
-      length: 92,
-      height: 70,
-      radius: 87,
+      width: 12,
+      length: 28,
+      height: 46,
+      radius: 78,
     },
-    category: 'Electrical',
-    rare: true,
-    description: 'Acute pulmonary manifestations due to radiation',
-    productStatus: 'Sold Out',
+    category: 'RF Shielding',
+    rare: false,
+    description: 'Contracture, right wrist',
+    productStatus: 'In Stock',
     priceList: {
-      price: 65,
-      createdTime: '4/11/2022',
+      price: 55,
+      createdTime: '9/19/2021',
     },
-    colors: ['Red', 'Aquamarine', 'Crimson', 'Green', 'Orange'],
+    colors: ['Red', 'Khaki', 'Aquamarine', 'Maroon'],
     reviews: {
-      postDate: '1/8/2022',
+      postDate: '3/24/2022',
       stars: 4,
-      title: 'Ovateleaf Flatsedge',
-      description: '¡™£¢∞§¶•ªº–≠',
-      customerId: {
-        $oid: '62a755fafc13ae4639000197',
-      },
+      title: 'Oahu Chewstick',
+      description: '울란바토르',
+      customerId: '62a7c9f910bb9065d6d40c75',
     },
     stock: [
       {
-        amount: 25,
-        action: 'import',
-      },
-      {
-        amount: 33,
+        amount: 45,
         action: 'sold',
       },
       {
-        amount: 84,
+        amount: 12,
+        action: 'sold',
+      },
+      {
+        amount: 29,
+        action: 'sold',
+      },
+      {
+        amount: 7,
         action: 'import',
       },
     ],
-    images: [
+  },
+  {
+    name: 'Sauce - Balsamic Viniagrette',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Fire Sprinkler System',
+    rare: false,
+    description:
+      'Burn of second degree of unspecified site of lower limb, except ankle and foot',
+    productStatus: 'In Stock',
+    priceList: {
+      price: 99,
+      createdTime: '5/28/2022',
+    },
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviews: {
+      postDate: '3/1/2022',
+      stars: 1,
+      title: "Harkness' Flaxflower",
+      description: '✋🏿 💪🏿 👐🏿 🙌🏿 👏🏿 🙏🏿',
+      customerId: '62a7c9f910bb9065d6d40c75',
+    },
+    stock: [
       {
-        $oid: '62a755fafc13ae4639000198',
+        amount: 36,
+        action: 'import',
       },
       {
-        $oid: '62a755fafc13ae4639000199',
+        amount: 52,
+        action: 'lose',
       },
       {
-        $oid: '62a755fafc13ae463900019a',
+        amount: 79,
+        action: 'import',
       },
     ],
   },
 ];
 
-
-
-
-export default products
+export default products;

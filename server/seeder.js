@@ -27,7 +27,7 @@ const importData = async () => {
     const createAddresses = await Address.insertMany(addresses)
     const createCustomers = await Customer.insertMany(customers);
     const createOrders = await Order.insertMany(orders);
-    // const createProducts = await Product.insertMany(products);
+    const createProducts = await Product.insertMany(products);
 
     // const adminUser = createdUsers[0]._id;
 
