@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+
 const CustomerSchema = new mongoose.Schema({
   email: { type: String },
   password: { type: String },
@@ -17,7 +18,7 @@ const CustomerSchema = new mongoose.Schema({
       expirationDate: { type: Date },
     },
   ],
-  addressesId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
+  addressesId: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
   ordersId:[{type: mongoose.Schema.Types.ObjectId, ref: 'Order'} ]
 });
 

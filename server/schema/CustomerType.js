@@ -8,10 +8,12 @@ import {
 } from "graphql";
 import AddressType from "./AddressType.js";
 import dateScalar from "./CustomScalar.js";
+import Address from '../models/Address.js';
 
 const CreditCardType = new GraphQLObjectType({
   name: "CreditCard",
   fields: () => ({
+      id: { type: GraphQLID },
     cardNo: { type: GraphQLString },
     holderName: { type: GraphQLString },
     expirationDate: { type: dateScalar },
@@ -21,6 +23,7 @@ const CreditCardType = new GraphQLObjectType({
 const CustomerType = new GraphQLObjectType({
   name: "Customer",
   fields: () => ({
+   id: { type: GraphQLID },
     email: { type: GraphQLString },
     password: { type: GraphQLString },
     firstName: { type: GraphQLString },
@@ -31,7 +34,12 @@ const CustomerType = new GraphQLObjectType({
     wechatId: { type: GraphQLString },
     paypalId: { type: GraphQLString },
     creditCards: { type: CreditCardType },
-    addresses: { type: AddressType },
+    addresses: { 
+      type: AddressType,
+   resolve(parent, args) {
+      return Address.findById(parent.addressesId);
+    },
+   },
   }),
 });
 

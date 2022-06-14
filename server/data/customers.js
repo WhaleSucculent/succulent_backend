@@ -21,7 +21,7 @@ const customers = [
         expirationDate: '2021-09-26',
       },
     ],
-    addresses: '62a7707f09e5b0817e1cb341',
+    addressesId: '62a7c9f910bb9065d6d40c6d',
   },
   {
     email: 'adunstone1@blog.com',
@@ -34,7 +34,7 @@ const customers = [
     wechatId: 'adunstone1',
     paypalId: 'adunstone1',
     creditCards: [],
-    addresses: '62a7707f09e5b0817e1cb341',
+    addressesId: '62a7c9f910bb9065d6d40c6d',
   },
   {
     email: 'mstorks2@bloglines.com',
@@ -63,7 +63,7 @@ const customers = [
         expirationDate: '2021-12-17',
       },
     ],
-    addresses: '62a7707f09e5b0817e1cb341',
+    addressesId: '62a7c9f910bb9065d6d40c6d',
   },
 ];
 

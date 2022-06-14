@@ -1,4 +1,6 @@
 import { GraphQLObjectType, GraphQLID, GraphQLString } from 'graphql';
+
+import CustomerType from './CustomerType.js';
 const AddressType = new GraphQLObjectType({
   name: 'Address',
   fields: () => ({
