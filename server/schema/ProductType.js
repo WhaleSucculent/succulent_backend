@@ -3,9 +3,12 @@ import {
   GraphQLID,
   GraphQLString,
   GraphQLInt,
-  GraphQLBoolean,
   GraphQLScalarType,
+  GraphQLBoolean,
+  
 } from 'graphql';
+import Customer from '../models/Customer.js';
+import CustomerType from './CustomerType.js';
 import dateScalar from './CustomScalar.js';
 
 
@@ -34,7 +37,12 @@ const ReviewsType = new GraphQLObjectType({
     description: { type: GraphQLString },
     createdAt: { type: dateScalar },
     updatedAt: { type: dateScalar },
-    //TODO customerId
+    customer:{
+      type: CustomerType,
+      resolve(parent, args) {
+        return Customer.findById(parent.customerId);
+      }
+    }
   }),
 });
 
@@ -66,6 +74,7 @@ const ProductType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     postDate: { type: dateScalar },
+    length: { type: GraphQLString },
     size: {
       type: SizeType,
       resolve(parent, args) {
@@ -85,10 +94,14 @@ const ProductType = new GraphQLObjectType({
     // // images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     reviews: {
       type: ReviewsType,
+      resolve(parent, args) {
+        return ReviewsType.findBy(parent.id)
+      }
     },
     stock: {
       type: StocksType,
     },
+
   }),
 });
 
