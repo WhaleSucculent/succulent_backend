@@ -1,5 +1,6 @@
 const products = [
   {
+    _id: '62a99e173c1942691d27c2b4',
     name: 'Muffin Mix - Lemon Cranberry',
     postDate: '2/22/2022',
     size: {
@@ -12,26 +13,22 @@ const products = [
     rare: false,
     description: 'Other infective bursitis, left wrist',
     productStatus: 'In Stock',
-    priceList: {
-      price: 55,
-      createdTime: '9/13/2021',
-    },
-    colors: ['Mauv', 'Purple', 'Indigo', 'Orange', 'Fuscia'],
-    reviews: {
-      postDate: '8/18/2021',
-      stars: 3,
-      title: 'Licorice Weed',
-      description: '0️⃣ 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 9️⃣ 🔟',
-      customerId: '62a90f3e88672f1dbd12c32b',
-    },
-    stock: [
+    priceLists: [
       {
-        amount: 33,
-        action: 'import',
+        price: 55,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 22,
+        postDate: '2021-3-11',
       },
     ],
+    colors: ['Mauv', 'Purple', 'Indigo', 'Orange', 'Fuscia'],
+    reviewIds: ['62a994a78e7fe122350e1d0d', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972214', '62a99eb18b5abb7c51972213'],
   },
   {
+    _id: '62a99e173c1942691d27c2b8',
     name: 'Beef - Texas Style Burger',
     postDate: '3/6/2022',
     size: {
@@ -44,38 +41,22 @@ const products = [
     rare: false,
     description: 'Contracture, right wrist',
     productStatus: 'In Stock',
-    priceList: {
-      price: 55,
-      createdTime: '9/19/2021',
-    },
-    colors: ['Red', 'Khaki', 'Aquamarine', 'Maroon'],
-    reviews: {
-      postDate: '3/24/2022',
-      stars: 4,
-      title: 'Oahu Chewstick',
-      description: '울란바토르',
-      customerId: '62a90f3e88672f1dbd12c32e',
-    },
-    stock: [
+    priceLists: [
       {
-        amount: 45,
-        action: 'sold',
+        price: 55,
+        postDate: '2021-9-11',
       },
       {
-        amount: 12,
-        action: 'sold',
-      },
-      {
-        amount: 29,
-        action: 'sold',
-      },
-      {
-        amount: 7,
-        action: 'import',
+        price: 22,
+        postDate: '2021-3-11',
       },
     ],
+    colors: ['Red', 'Khaki', 'Aquamarine', 'Maroon'],
+    reviewIds: ['62a994a78e7fe122350e1d02', '62a994a78e7fe122350e1d01'],
+    stockIds: ['62a99eb18b5abb7c51972215'],
   },
   {
+    _id: '62a99e173c1942691d27c2bf',
     name: 'Sauce - Balsamic Viniagrette',
     postDate: '10/13/2021',
     size: {
@@ -89,32 +70,19 @@ const products = [
     description:
       'Burn of second degree of unspecified site of lower limb, except ankle and foot',
     productStatus: 'In Stock',
-    priceList: {
-      price: 99,
-      createdTime: '5/28/2022',
-    },
-    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
-    reviews: {
-      postDate: '3/1/2022',
-      stars: 1,
-      title: "Harkness' Flaxflower",
-      description: '✋🏿 💪🏿 👐🏿 🙌🏿 👏🏿 🙏🏿',
-      customerId: '62a90f3e88672f1dbd12c32f',
-    },
-    stock: [
+    priceLists: [
       {
-        amount: 36,
-        action: 'import',
+        price: 55,
+        postDate: '2021-9-11',
       },
       {
-        amount: 52,
-        action: 'lose',
-      },
-      {
-        amount: 79,
-        action: 'import',
+        price: 22,
+        postDate: '2021-3-11',
       },
     ],
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
   },
 ];
 

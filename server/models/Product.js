@@ -14,30 +14,16 @@ const ProductSchema = new mongoose.Schema(
     rare: { type: Boolean },
     description: { type: String },
     productStatus: { type: String, enum: ['Sold Out', 'In Stock'] },
-    priceList: [
+    priceLists: [
       {
         price: { type: Number },
+        postDate: { type: Date },
       },
-      { timestamps: true },
     ],
     colors: [{ type: String }],
     // images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
-    reviews: [
-      {
-        postData: { type: Date },
-        stars: { type: Number },
-        title: { type: String },
-        description: { type: String },
-        customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
-      },
-    ],
-    stock: [
-      {
-        amount: { type: Number },
-        action: { type: String },
-      },
-      { timestamps: true },
-    ],
+    reviewIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    stockIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stock' }],
   },
   { timestamps: true }
 );

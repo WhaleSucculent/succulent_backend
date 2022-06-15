@@ -6,14 +6,14 @@ import {
   GraphQLList,
 } from 'graphql';
 
-import Address from '../models/Address.js';
-import Customer from '../models/Customer.js';
-import Delivery from '../models/Delivery.js';
-import Payment from '../models/Payment.js';
-import ProductInCart from '../models/ProductInCart.js';
+import Address from '../../models/Address.js';
+import Customer from '../../models/Customer.js';
+import Delivery from '../../models/Delivery.js';
+import Payment from '../../models/Payment.js';
+import ProductInCart from '../../models/ProductInCart.js';
 import AddressType from './AddressType.js';
-import CustomerType from './CustomerType.js';
-import dateScalar from './CustomScalar.js';
+import CustomerType from '../CustomerTypes/CustomerType.js';
+import { dateScalar } from '../utilScalar.js';
 import DeliveryType from './DeliveryType.js';
 import PaymentType from './PaymentType.js';
 import ProductInCartType from './ProductInCartType.js';
@@ -45,8 +45,8 @@ const OrderType = new GraphQLObjectType({
     productsInCart: {
       type: new GraphQLList(ProductInCartType),
       resolve(parent, args) {
-        return parent.productsInCart.map((productInCart) =>
-          ProductInCart.findById(productInCart)
+        return parent.productsInCartIds.map((productInCartId) =>
+          ProductInCart.findById(productInCartId)
         );
       },
     },

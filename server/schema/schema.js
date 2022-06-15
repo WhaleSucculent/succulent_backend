@@ -9,20 +9,14 @@ import {
 import Product from '../models/Product.js';
 import Address from '../models/Address.js';
 import Order from '../models/Order.js';
-import AddressType from './AddressType.js';
-import ProductType from './ProductType.js';
-import CustomerType from './CustomerType.js';
+import AddressType from './OrderTypes/AddressType.js';
+import ProductType from './ProductTypes/ProductType.js';
+import CustomerType from './CustomerTypes/CustomerType.js';
 import Customer from '../models/Customer.js';
-import OrderType from './OrderType.js';
+import OrderType from './OrderTypes/OrderType.js';
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    addresses: {
-      type: new GraphQLList(AddressType),
-      resolve() {
-        return Address.find();
-      },
-    },
     products: {
       type: new GraphQLList(ProductType),
       resolve() {

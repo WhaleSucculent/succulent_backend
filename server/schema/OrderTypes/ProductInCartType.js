@@ -1,6 +1,6 @@
 import { GraphQLFloat, GraphQLID, GraphQLInt, GraphQLObjectType } from "graphql";
-import Product from "../models/Product.js";
-import ProductType from "./ProductType.js";
+import Product from "../../models/Product.js";
+import ProductType from "../ProductTypes/ProductType.js";
 
 const ProductInCartType = new GraphQLObjectType({
   name: 'ProductInCart',

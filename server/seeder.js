@@ -18,6 +18,10 @@ import Payment from './models/Payment.js';
 import payments from './data/payments.js';
 import ProductInCart from './models/ProductInCart.js';
 import productInCarts from './data/productInCarts.js';
+import Review from './models/Review.js';
+import reviews from './data/reviews.js';
+import Stock from './models/Stock.js';
+import stocks from './data/stocks.js';
 
 
 dotenv.config();
@@ -31,7 +35,13 @@ const importData = async () => {
     await Delivery.deleteMany()
     await Payment.deleteMany();
     await ProductInCart.deleteMany();
+
     await Order.deleteMany();
+    await Customer.deleteMany();
+    await Review.deleteMany();
+    await Product.deleteMany();
+    await Stock.deleteMany();
+
     
 
     const createAddresses = await Address.insertMany(addresses)
@@ -39,7 +49,13 @@ const importData = async () => {
     const createDelivery = await Delivery.insertMany(deliveries);
     const createPayment = await Payment.insertMany(payments);
     const createProductInCart = await ProductInCart.insertMany(productInCarts);
+
+
+    const createProduct = await Product.insertMany(products);
+    const createStock = await Stock.insertMany(stocks);
     const createOrder = await Order.insertMany(orders);
+    const createCustomers = await Customer.insertMany(customers)
+    const createReview = await Review.insertMany(reviews)
 
 
     // const adminUser = createdUsers[0]._id;

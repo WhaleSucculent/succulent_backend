@@ -10,19 +10,13 @@ const customers = [
     role: 'admin',
     wechatId: 'adennidge0',
     paypalId: 'adennidge0',
-    creditCards: [
-      {
-        cardNo: '5007661261700620',
-        holderName: 'Anabelle Cortez',
-        expirationDate: '2021-06-22',
-      },
-      {
-        cardNo: '5010124088925495',
-        holderName: 'Damara Lambswood',
-        expirationDate: '2021-09-26',
-      },
+    creditCardIds: [
+      '62a95376267505c8a74963c5',
+      '62a95376267505c8a74963c4',
+      '62a95376267505c8a74963c2',
     ],
-    addressesId: '62a7c9f910bb9065d6d40c6f',
+    addressIds: ['62a7c9f910bb9065d6d40c6f', '62a7c9f910bb9065d6d40c6e'],
+    orderIds: ['62a981f09416742055244606', '62a981f09416742055244605'],
   },
   {
     _id: '62a90f3e88672f1dbd12c32e',
@@ -35,8 +29,9 @@ const customers = [
     role: 'admin',
     wechatId: 'adunstone1',
     paypalId: 'adunstone1',
-    creditCards: [],
-    addressesId: '62a7c9f910bb9065d6d40c6e',
+    creditCardIds: ['62a95376267505c8a74963c2', '62a95376267505c8a74963c3'],
+    addressIds: ['62a7c9f910bb9065d6d40c6f', '62a7c9f910bb9065d6d40c6e'],
+    orderIds: ['62a981f09416742055244604', '62a981f09416742055244605'],
   },
   {
     _id: '62a90f3e88672f1dbd12c32b',
@@ -49,26 +44,10 @@ const customers = [
     role: 'admin',
     wechatId: 'mstorks2',
     paypalId: 'mstorks2',
-    creditCards: [
-      {
-        cardNo: null,
-        holderName: 'Atalanta Undrill',
-        expirationDate: '2022-05-08',
-      },
-      {
-        cardNo: '5002352850341217',
-        holderName: 'Kalil Baff',
-        expirationDate: '2022-10-18',
-      },
-      {
-        cardNo: '372301931997250',
-        holderName: 'Rhonda Goady',
-        expirationDate: '2021-12-17',
-      },
-    ],
-    addressesId: '62a7c9f910bb9065d6d40c6d',
+    creditCardIds: ['62a95376267505c8a74963c3', '62a95376267505c8a74963c4'],
+    addressIds: ['62a7c9f910bb9065d6d40c6f', '62a7c9f910bb9065d6d40c6d'],
+    orderIds: ['62a981f09416742055244604', '62a981f09416742055244606'],
   },
 ];
 
-
-export default customers
+export default customers;

@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLInt } from 'graphql';
-import dateScalar from './CustomScalar.js';
+import { dateScalar } from '../utilScalar.js';
 
 const PaymentType = new GraphQLObjectType({
   name: 'Payment',
