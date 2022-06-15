@@ -22,7 +22,7 @@ const products = [
       stars: 3,
       title: 'Licorice Weed',
       description: '0️⃣ 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 9️⃣ 🔟',
-      customerId: '62a7c9f910bb9065d6d40c75',
+      customerId: '62a90f3e88672f1dbd12c32b',
     },
     stock: [
       {
@@ -54,7 +54,7 @@ const products = [
       stars: 4,
       title: 'Oahu Chewstick',
       description: '울란바토르',
-      customerId: '62a7c9f910bb9065d6d40c75',
+      customerId: '62a90f3e88672f1dbd12c32e',
     },
     stock: [
       {
@@ -99,7 +99,7 @@ const products = [
       stars: 1,
       title: "Harkness' Flaxflower",
       description: '✋🏿 💪🏿 👐🏿 🙌🏿 👏🏿 🙏🏿',
-      customerId: '62a7c9f910bb9065d6d40c75',
+      customerId: '62a90f3e88672f1dbd12c32f',
     },
     stock: [
       {
