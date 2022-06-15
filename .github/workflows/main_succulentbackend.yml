@@ -21,16 +21,24 @@ jobs:
         with:
           node-version: '16.x'
 
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
       - name: npm install, build, and test
         run: |
           npm install
-          npm run dev
-
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
           path: .
+
+
 
   deploy:
     runs-on: ubuntu-latest
