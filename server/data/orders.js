@@ -1,99 +1,33 @@
 const orders = [
   {
-    customerId: {
-      $oid: '62a755e1fc13ae1717000067',
-    },
-    shipingAddressId: {
-      $oid: '62a755e1fc13ae1717000068',
-    },
-    billingAddressId: {
-      $oid: '62a755e1fc13ae1717000069',
-    },
+    customerId: '62a90f3e88672f1dbd12c32f',
+    shippingAddressId: '62a7c9f910bb9065d6d40c6f',
+    billingAddressId: '62a7c9f910bb9065d6d40c6e',
     orderDate: '2021-11-16',
-    orderStatus: 'preparing',
-    products: {
-      name: 'False Indian Plantain',
-      qty: 1,
-      price: 56,
-      product: {
-        $oid: '62a755e1fc13ae171700006a',
-      },
-    },
-    delivery: {
-      deliveryCompany: 'Pollich LLC',
-      deliveryType: 'slow',
-      traceNo: '5245357186',
-    },
-    payment: {
-      method: 'CreditCard',
-      date: '2021-08-20',
-      amount: 665,
-      status: 105,
-    },
+    orderStatus: 'undelivered',
+    productsInCart: ['62a95dcb3a42e0dbf9dca0d4', '62a95dcb3a42e0dbf9dca0d3'],
+    deliveryId: '62a95376267505c8a74963c9',
+    paymentId: '62a96861f6b4017e0e12c175',
   },
   {
-    customerId: {
-      $oid: '62a755e1fc13ae171700006b',
-    },
-    shipingAddressId: {
-      $oid: '62a755e1fc13ae171700006c',
-    },
-    billingAddressId: {
-      $oid: '62a755e1fc13ae171700006d',
-    },
+    customerId: '62a90f3e88672f1dbd12c32e',
+    shippingAddressId: '62a7c9f910bb9065d6d40c6f',
+    billingAddressId: '62a7c9f910bb9065d6d40c6e',
     orderDate: '2022-05-07',
-    orderStatus: 'delivering',
-    products: {
-      name: 'Littleflower Alumroot',
-      qty: 2,
-      price: 14,
-      product: {
-        $oid: '62a755e1fc13ae171700006e',
-      },
-    },
-    delivery: {
-      deliveryCompany: 'Feil-Klocko',
-      deliveryType: 'fast',
-      traceNo: '0765364522',
-    },
-    payment: {
-      method: 'CreditCard',
-      date: '2021-11-13',
-      amount: 202,
-      status: 161,
-    },
+    orderStatus: 'undelivered',
+    productsInCart: '62a95dcb3a42e0dbf9dca0d3',
+    deliveryId: '62a95376267505c8a74963c8',
+    paymentId: '62a96861f6b4017e0e12c174',
   },
   {
-    customerId: {
-      $oid: '62a755e1fc13ae171700006f',
-    },
-    shipingAddressId: {
-      $oid: '62a755e1fc13ae1717000070',
-    },
-    billingAddressId: {
-      $oid: '62a755e1fc13ae1717000071',
-    },
+    customerId: '62a90f3e88672f1dbd12c32b',
+    shippingAddressId: '62a7c9f910bb9065d6d40c6f',
+    billingAddressId: '62a7c9f910bb9065d6d40c6d',
     orderDate: '2022-02-21',
-    orderStatus: 'received',
-    products: {
-      name: 'Tripterocladium Moss',
-      qty: 3,
-      price: 47,
-      product: {
-        $oid: '62a755e1fc13ae1717000072',
-      },
-    },
-    delivery: {
-      deliveryCompany: 'Johns, Treutel and Will',
-      deliveryType: 'fast',
-      traceNo: '6820950365',
-    },
-    payment: {
-      method: 'WechatPay',
-      date: '2021-09-13',
-      amount: 666,
-      status: 334,
-    },
+    orderStatus: 'undelivered',
+    productsInCart: '62a95dcb3a42e0dbf9dca0d2',
+    deliveryId: '62a95376267505c8a74963c7',
+    paymentId: '62a96861f6b4017e0e12c173',
   },
 ];
 

@@ -1,17 +1,13 @@
 import { GraphQLObjectType, GraphQLID, GraphQLString } from 'graphql';
-
-import CustomerType from './CustomerType.js';
 const AddressType = new GraphQLObjectType({
   name: 'Address',
   fields: () => ({
     id: { type: GraphQLID },
-    customer: { type: CustomerType, resolve(parent, args) {
-      return Customer.findById(parent.customerId)
-    } },
+    category: { type: GraphQLString },
     firstName: { type: GraphQLString },
-    LastName: { type: GraphQLString },
-    Address: { type: GraphQLString },
-    Apartment: { type: GraphQLString },
+    lastName: { type: GraphQLString },
+    address: { type: GraphQLString },
+    apartment: { type: GraphQLString },
     city: { type: GraphQLString },
     country: { type: GraphQLString },
     state: { type: GraphQLString },
@@ -21,4 +17,4 @@ const AddressType = new GraphQLObjectType({
   }),
 });
 
-export default AddressType
+export default AddressType;

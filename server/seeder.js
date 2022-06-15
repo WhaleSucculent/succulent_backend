@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import colors from 'colors';
 // import users from './data/users.js';
@@ -11,6 +10,14 @@ import Address from './models/Address.js';
 import Product from './models/Product.js';
 import Customer from './models/Customer.js';
 import Order from './models/Order.js';
+import CreditCard from './models/CreditCard.js';
+import creditCards from './data/creditCards.js';
+import Delivery from './models/Delivery.js';
+import deliveries from './data/deliveries.js';
+import Payment from './models/Payment.js';
+import payments from './data/payments.js';
+import ProductInCart from './models/ProductInCart.js';
+import productInCarts from './data/productInCarts.js';
 
 
 dotenv.config();
@@ -20,14 +27,20 @@ connectDB();
 const importData = async () => {
   try {
     await Address.deleteMany();
-    await Customer.deleteMany();
+    await CreditCard.deleteMany()
+    await Delivery.deleteMany()
+    await Payment.deleteMany();
+    await ProductInCart.deleteMany();
     await Order.deleteMany();
-    await Product.deleteMany();
+    
 
     const createAddresses = await Address.insertMany(addresses)
-    const createCustomers = await Customer.insertMany(customers);
-    const createOrders = await Order.insertMany(orders);
-    const createProducts = await Product.insertMany(products);
+    const createCreditCard = await CreditCard.insertMany(creditCards);
+    const createDelivery = await Delivery.insertMany(deliveries);
+    const createPayment = await Payment.insertMany(payments);
+    const createProductInCart = await ProductInCart.insertMany(productInCarts);
+    const createOrder = await Order.insertMany(orders);
+
 
     // const adminUser = createdUsers[0]._id;
 

@@ -1,5 +1,7 @@
 const addresses = [
   {
+    _id: '62a7c9f910bb9065d6d40c6f',
+    category: 'Customer',
     firstName: 'Bibbie',
     lastName: 'McGorley',
     address: '6 Dakota Lane',
@@ -12,6 +14,8 @@ const addresses = [
     phone2: '308-665-1285',
   },
   {
+    _id: '62a7c9f910bb9065d6d40c6e',
+    category: 'Shipping',
     firstName: 'Haleigh',
     lastName: 'Dealtry',
     address: '796 Mesta Hill',
@@ -24,6 +28,8 @@ const addresses = [
     phone2: '881-364-0267',
   },
   {
+    _id: '62a7c9f910bb9065d6d40c6d',
+    category: 'Billing',
     firstName: 'Gretta',
     lastName: 'Romaint',
     address: '30835 Monica Drive',

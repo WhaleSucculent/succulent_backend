@@ -8,10 +8,12 @@ import {
 } from 'graphql';
 import Product from '../models/Product.js';
 import Address from '../models/Address.js';
+import Order from '../models/Order.js';
 import AddressType from './AddressType.js';
 import ProductType from './ProductType.js';
 import CustomerType from './CustomerType.js';
 import Customer from '../models/Customer.js';
+import OrderType from './OrderType.js';
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -32,8 +34,13 @@ const RootQuery = new GraphQLObjectType({
       resolve() {
         return Customer.find();
       }
-    }
-
+    },
+    orders: {
+      type: new GraphQLList(OrderType),
+      resolve() {
+        return Order.find();
+      },
+    },
     // projects: {
     //   type: new GraphQLList(ProjectType),
     //   resolve() {

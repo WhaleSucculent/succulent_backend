@@ -3,46 +3,65 @@ import {
   GraphQLID,
   GraphQLString,
   GraphQLInt,
-  GraphQLBoolean,
-  GraphQLScalarType,
+  GraphQLList,
 } from 'graphql';
-import dateScalar from './CustomScalar.js';
-import ProductType from './ProductType.js';
 
-// products type
-const ProductsType = new GraphQLObjectType({
-  name: 'Product',
-  fields: () => ({
-    id: {type: GraphQLID},
-    name: { type: GraphQLString },
-    qty: { type: GraphQLInt },
-    // image: { type: Image},
-    price: { type: GraphQLInt },
-    product: {
-      type: ProductType,
-    },
-  }),
-});
+import Address from '../models/Address.js';
+import Customer from '../models/Customer.js';
+import Delivery from '../models/Delivery.js';
+import Payment from '../models/Payment.js';
+import ProductInCart from '../models/ProductInCart.js';
+import AddressType from './AddressType.js';
+import CustomerType from './CustomerType.js';
+import dateScalar from './CustomScalar.js';
+import DeliveryType from './DeliveryType.js';
+import PaymentType from './PaymentType.js';
+import ProductInCartType from './ProductInCartType.js';
 
 const OrderType = new GraphQLObjectType({
   name: 'Order',
   fields: () => ({
-    id: {type: GraphQLID},
-    shippingAddressId: { type: GraphQLID },
-    billingAddressId: { type: GraphQLID },
+    id: { type: GraphQLID },
+    customer: {
+      type: CustomerType,
+      resolve(parent, args) {
+        return Customer.findById(parent.customerId);
+      },
+    },
+    shippingAddress: {
+      type: AddressType,
+      resolve(parent, args) {
+        return Address.findById(parent.shippingAddressId);
+      },
+    },
+    billingAddress: {
+      type: AddressType,
+      resolve(parent, args) {
+        return Address.findById(parent.billingAddressId);
+      },
+    },
     orderDate: { type: dateScalar },
     orderStatus: { type: GraphQLString },
-    products: [{ type: ProductsType }],
+    productsInCart: {
+      type: new GraphQLList(ProductInCartType),
+      resolve(parent, args) {
+        return parent.productsInCart.map((productInCart) =>
+          ProductInCart.findById(productInCart)
+        );
+      },
+    },
+
     delivery: {
-      deliveryCompany: { type: GraphQLString },
-      deliveryType: { type: GraphQLString },
-      traceNo: { type: GraphQLString },
+      type: DeliveryType,
+      resolve(parent, args) {
+        return Delivery.findById(parent.deliveryId);
+      },
     },
     payment: {
-      method: { type: GraphQLString },
-      date: { type: dateScalar },
-      amount: { type: GraphQLInt },
-      status: { type: GraphQLString },
+      type: PaymentType,
+      resolve(parent, args) {
+        return Payment.findById(parent.paymentId);
+      },
     },
   }),
 });
