@@ -5,6 +5,8 @@ import {
   GraphQLSchema,
   GraphQLList,
   GraphQLNonNull,
+  GraphQLID,
+  GraphQLEnumType,
 } from 'graphql';
 import Product from '../models/Product.js';
 import Address from '../models/Address.js';
@@ -14,6 +16,7 @@ import ProductType from './ProductTypes/ProductType.js';
 import CustomerType from './CustomerTypes/CustomerType.js';
 import Customer from '../models/Customer.js';
 import OrderType from './OrderTypes/OrderType.js';
+import { dateScalar } from './utilScalar.js';
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -23,16 +26,22 @@ const RootQuery = new GraphQLObjectType({
         return Product.find();
       },
     },
-    customers:{
+    customers: {
       type: new GraphQLList(CustomerType),
       resolve() {
         return Customer.find();
-      }
+      },
     },
     orders: {
       type: new GraphQLList(OrderType),
       resolve() {
         return Order.find();
+      },
+    },
+    order: {
+      type: new GraphQLList(OrderType),
+      resolve(parent, args) {
+        return Order.findById(args.id);
       },
     },
     // projects: {
@@ -68,6 +77,55 @@ const RootQuery = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
+    // Add an order
+    addOrder: {
+      type: OrderType,
+      args: {
+        customerId: { type: GraphQLNonNull(GraphQLID) },
+        shippingAddressId: { type: GraphQLNonNull(GraphQLID) },
+        billingAddressId: { type: GraphQLNonNull(GraphQLID) },
+        // orderDate: { type: GraphQLString},
+        orderStatus: {
+          type: new GraphQLEnumType({
+            name: 'OrderStatus',
+            values: {
+              unpaid: { value: 'unpaid' },
+              undelivered: { value: 'undelivered' },
+              receiving: { value: 'receiving' },
+            },
+          }),
+          defaultValue: 'unpaid',
+        },
+        productsInCartId: { type: GraphQLList(GraphQLID) },
+        deliveryId: { type: GraphQLNonNull(GraphQLID) },
+        paymentId: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        const order = new Order({
+          customerId: args.customerId,
+          shippingAddressId: args.shippingAddressId,
+          billingAddressId: args.billingAddressId,
+          orderDate: args.orderDate,
+          orderStatus: args.orderStatus,
+          productsInCartId: args.productsInCartId,
+          deliveryId: args.deliveryId,
+          paymentId: args.paymentId,
+        });
+        console.log('Order added');
+        return order.save();
+      },
+    },
+
+    // Delete an order
+    deleteOrder: {
+      type: OrderType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return Order.findByIdAndRemove(args.id);
+      },
+    },
     // Add an address
     addAddress: {
       type: AddressType,
