@@ -157,6 +157,21 @@ const mutation = new GraphQLObjectType({
         return address.save();
       },
     },
+    //Add a product
+    addProduct:{
+      type: ProductType,
+      args:{
+        name: {type: new GraphQLNonNull(GraphQLString)},
+        postDate:{type:new GraphQLNonNull(dateScalar)},
+        colors:{type:new GraphQLNonNull(GraphQLString)},
+        category:{type:new GraphQLNonNull(GraphQLString)},
+        rare:{type:new GraphQLNonNull(GraphQLBoolean)},
+        description:{type:new GraphQLNonNull(GraphQLString)},
+        productStatus:{type:new GraphQLNonNull(GraphQLString)},
+        length:{type:new GraphQLNonNull(GraphQLString)},
+        
+      }
+    }
   },
 });
 
