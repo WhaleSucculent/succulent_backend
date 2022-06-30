@@ -169,7 +169,49 @@ const mutation = new GraphQLObjectType({
         description:{type:new GraphQLNonNull(GraphQLString)},
         productStatus:{type:new GraphQLNonNull(GraphQLString)},
         length:{type:new GraphQLNonNull(GraphQLString)},
-        
+
+      },
+      resolve(parent,args){
+        const product = new Product({
+          name: args.name,
+          postDate: args.postDate,
+          colors: args.colors,
+          category: args.category,
+          rare: args.rare,
+          description: args.description,
+          productStatus: args.productStatus,
+          length: args.length,
+        });
+        return product.save();
+      }
+      },
+    //Add a customer
+    addCustomer:{
+      type: CustomerType,
+      args:{
+        email: {type: new GraphQLNonNull(GraphQLString)},
+        password: {type: new GraphQLNonNull(GraphQLString)},
+        firstName: {type: new GraphQLNonNull(GraphQLString)},
+        lastName: {type: new GraphQLNonNull(GraphQLString)},
+        phone: {type: new GraphQLNonNull(GraphQLString)},
+        status: {type: new GraphQLNonNull(GraphQLString)},
+        role: {type: new GraphQLNonNull(GraphQLString)},
+        wechatId: {type: new GraphQLNonNull(GraphQLString)},
+        paypalId: {type: new GraphQLNonNull(GraphQLString)},
+      },
+      resolve(parent,args){
+        const customer = new Customer({
+          email: args.email,
+          password: args.password,
+          firstName: args.firstName,
+          lastName: args.lastName,
+          phone: args.phone,
+          status: args.status,
+          role: args.role,
+          wechatId: args.wechatId,
+          paypalId: args.paypalId,
+        });
+        return customer.save();
       }
     }
   },
