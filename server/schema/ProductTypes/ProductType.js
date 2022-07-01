@@ -6,6 +6,7 @@ import {
   GraphQLScalarType,
   GraphQLBoolean,
   GraphQLList,
+  GraphQLFloat,
 } from 'graphql';
 import Customer from '../../models/Customer.js';
 import Product from '../../models/Product.js';
@@ -47,7 +48,7 @@ const StocksType = new GraphQLObjectType({
 const PriceListType = new GraphQLObjectType({
   name: 'PriceList',
   fields: () => ({
-    price: { type: GraphQLInt },
+    price: { type: GraphQLFloat },
     postDate: { type: dateScalar },
   }),
 });

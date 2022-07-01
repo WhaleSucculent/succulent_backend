@@ -7,6 +7,7 @@ import {
   GraphQLNonNull,
   GraphQLID,
   GraphQLEnumType,
+  GraphQLBoolean,
 } from 'graphql';
 import Product from '../models/Product.js';
 import Address from '../models/Address.js';
@@ -162,25 +163,33 @@ const mutation = new GraphQLObjectType({
       type: ProductType,
       args:{
         name: {type: new GraphQLNonNull(GraphQLString)},
-        postDate:{type:new GraphQLNonNull(dateScalar)},
-        colors:{type:new GraphQLNonNull(GraphQLString)},
+        priceList: {type: new GraphQLNonNull(GraphQLList(GraphQLString))},
+        postDate:{type:new GraphQLNonNull(GraphQLString)},
+        size:{type:new GraphQLNonNull(GraphQLList(GraphQLString))},
+        colors:{type:new GraphQLNonNull(GraphQLList(GraphQLString))},
         category:{type:new GraphQLNonNull(GraphQLString)},
-        rare:{type:new GraphQLNonNull(GraphQLString)},
+        rare:{type:new GraphQLNonNull(GraphQLBoolean)},
         description:{type:new GraphQLNonNull(GraphQLString)},
         productStatus:{type:new GraphQLNonNull(GraphQLString)},
         length:{type:new GraphQLNonNull(GraphQLString)},
+        review:{type:new GraphQLNonNull(GraphQLList(GraphQLString))},
+        stock:{type:new GraphQLNonNull(GraphQLList(GraphQLString))},
 
       },
       resolve(parent,args){
         const product = new Product({
           name: args.name,
+          priceList: args.priceList,
           postDate: args.postDate,
+          size: args.size,
           colors: args.colors,
           category: args.category,
           rare: args.rare,
           description: args.description,
           productStatus: args.productStatus,
           length: args.length,
+          review: args.review,
+          stock: args.stock,
         });
         return product.save();
       }
