@@ -165,7 +165,7 @@ const mutation = new GraphQLObjectType({
         postDate:{type:new GraphQLNonNull(dateScalar)},
         colors:{type:new GraphQLNonNull(GraphQLString)},
         category:{type:new GraphQLNonNull(GraphQLString)},
-        rare:{type:new GraphQLNonNull(GraphQLBoolean)},
+        rare:{type:new GraphQLNonNull(GraphQLString)},
         description:{type:new GraphQLNonNull(GraphQLString)},
         productStatus:{type:new GraphQLNonNull(GraphQLString)},
         length:{type:new GraphQLNonNull(GraphQLString)},
@@ -198,7 +198,13 @@ const mutation = new GraphQLObjectType({
         role: {type: new GraphQLNonNull(GraphQLString)},
         wechatId: {type: new GraphQLNonNull(GraphQLString)},
         paypalId: {type: new GraphQLNonNull(GraphQLString)},
+        creditCards:{type: new GraphQLList(GraphQLID)},
+        address: {type: new GraphQLList(GraphQLID)},
+        orders:{type: new GraphQLList(GraphQLID)},
+
+        
       },
+      //creating a new customer using the mongoose model
       resolve(parent,args){
         const customer = new Customer({
           email: args.email,
@@ -210,6 +216,9 @@ const mutation = new GraphQLObjectType({
           role: args.role,
           wechatId: args.wechatId,
           paypalId: args.paypalId,
+          creditCards: args.creditCards,
+          address: args.address,
+          orders: args.orders
         });
         return customer.save();
       }
