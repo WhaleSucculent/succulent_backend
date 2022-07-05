@@ -10,7 +10,7 @@ const ProductSchema = new mongoose.Schema(
       height: { type: Number },
       radius: { type: Number },
     },
-    category: [{ type: String }],
+    category: { type: String },
     rare: { type: Boolean },
     description: { type: String },
     productStatus: { type: String, enum: ['Sold Out', 'In Stock'] },
