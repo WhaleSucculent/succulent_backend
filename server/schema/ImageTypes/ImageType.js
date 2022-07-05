@@ -10,7 +10,7 @@ const ImageType = new GraphQLObjectType({
     width: {type: GraphQLInt},
     size: {type: GraphQLInt},
     format: {type: String},
-    dataStream: {type: GraphQLString}
+    imageLink: {type: GraphQLString}
   }),
 });
 

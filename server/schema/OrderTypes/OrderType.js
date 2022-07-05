@@ -4,6 +4,7 @@ import {
   GraphQLString,
   GraphQLInt,
   GraphQLList,
+  GraphQLScalarType,
 } from 'graphql';
 
 import Address from '../../models/Address.js';
@@ -65,5 +66,6 @@ const OrderType = new GraphQLObjectType({
     },
   }),
 });
+
 
 export default OrderType;

@@ -7,7 +7,7 @@ const ImageSchema = new mongoose.Schema({
   width: { type: Number },
   size: { type: Number },
   format: { type: String },
-  dataStream: { type: Buffer },
+  imageLink: { type: Buffer },
 });
 
 const Image = mongoose.model('Image', ImageSchema);
