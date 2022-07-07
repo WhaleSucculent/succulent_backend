@@ -75,12 +75,12 @@ const ProductType = new GraphQLObjectType({
       },
     },
     postDate: { type: dateScalar },
-    size: {
-      type: SizeType,
-      resolve(parent, args) {
-        return parent.size;
-      },
-    },
+    // size: {
+    //   type: SizeType,
+    //   resolve(parent, args) {
+    //     return parent.size;
+    //   },
+    // },
     // images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     colors: {
       type: new GraphQLList(GraphQLString),

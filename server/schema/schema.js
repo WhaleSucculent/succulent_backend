@@ -165,7 +165,11 @@ const mutation = new GraphQLObjectType({
         name: {type: new GraphQLNonNull(GraphQLString)},
         priceList: {type: new GraphQLNonNull(GraphQLList(GraphQLString))},
         postDate:{type:new GraphQLNonNull(GraphQLString)},
+<<<<<<< HEAD
         size:{type:new GraphQLNonNull(SizeTypeInput)},
+=======
+        // size:{type:new GraphQLNonNull(SizeType)},
+>>>>>>> c1cda86a25d45452984506c9eed74ff048a34d22
         colors:{type:new GraphQLNonNull(GraphQLList(GraphQLString))},
         category:{type:new GraphQLNonNull(GraphQLString)},
         rare:{type:new GraphQLNonNull(GraphQLBoolean)},
@@ -181,7 +185,7 @@ const mutation = new GraphQLObjectType({
           name: args.name,
           priceList: args.priceList,
           postDate: args.postDate,
-          size: args.size,
+          // size: args.size,
           colors: args.colors,
           category: args.category,
           rare: args.rare,
@@ -211,7 +215,6 @@ const mutation = new GraphQLObjectType({
         address: {type: new GraphQLList(GraphQLID)},
         orders:{type: new GraphQLList(GraphQLID)},
 
-        
       },
       //creating a new customer using the mongoose model
       resolve(parent,args){
