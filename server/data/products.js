@@ -1,7 +1,7 @@
 const products = [
   {
     _id: '62a99e173c1942691d27c2b4',
-    name: 'Muffin Mix - Lemon Cranberry',
+    name: 'Echeveria Dark Ice',
     postDate: '2/22/2022',
     size: {
       width: 3,
@@ -9,17 +9,17 @@ const products = [
       height: 37,
       radius: 81,
     },
-    category: 'Prefabricated Aluminum Metal Canopies',
+    category: 'Succulents',
     rare: false,
-    description: 'Other infective bursitis, left wrist',
+    description: 'Dark Ice is a compact rosettes succulent which has spoon-shaped leaves. The greyish blue leaves can turn to reddish and deep purple when stressed, which is very charming',
     productStatus: 'In Stock',
     priceLists: [
       {
-        price: 55,
+        price: 5.19,
         postDate: '2021-9-11',
       },
       {
-        price: 22,
+        price: 2,
         postDate: '2021-3-11',
       },
     ],
@@ -30,7 +30,7 @@ const products = [
   },
   {
     _id: '62a99e173c1942691d27c2b8',
-    name: 'Beef - Texas Style Burger',
+    name: 'Echeveria Baby Finger',
     postDate: '3/6/2022',
     size: {
       width: 12,
@@ -38,17 +38,17 @@ const products = [
       height: 46,
       radius: 78,
     },
-    category: 'RF Shielding',
+    category: 'Succulent',
     rare: false,
-    description: 'Contracture, right wrist',
+    description: 'Baby finger is rare Korean Succulent. Its leaves are chubby like babys fingers, typically soft to vivid lavendar color, will turn bright mangos and pink color when they grow well, such as insufficient light and the leaves will be grayish green.The leaves are covered in a powdery wax called farina that protects them in full sun and gives a nice, matte finish.',
     productStatus: 'In Stock',
     priceLists: [
       {
-        price: 55,
+        price: 5.99,
         postDate: '2021-9-11',
       },
       {
-        price: 22,
+        price: 2.99,
         postDate: '2021-3-11',
       },
     ],
@@ -59,7 +59,7 @@ const products = [
   },
   {
     _id: '62a99e173c1942691d27c2bf',
-    name: 'Sauce - Balsamic Viniagrette',
+    name: 'Graptoveria Lovely Rose',
     postDate: '10/13/2021',
     size: {
       width: 81,
@@ -67,18 +67,78 @@ const products = [
       height: 98,
       radius: 87,
     },
-    category: 'Fire Sprinkler System',
+    category: 'Succulents',
     rare: false,
     description:
-      'Burn of second degree of unspecified site of lower limb, except ankle and foot',
+      'Lovely Rose is a small, attractive succulent plant with tightly compacted, plump, gray-green leaves that form a beautiful, rose-like cluster on the top of a bare stem. This mini succulent is easy to grow, and branch.',
     productStatus: 'In Stock',
     priceLists: [
       {
-        price: 55,
+        price: 5.99,
         postDate: '2021-9-11',
       },
       {
-        price: 22,
+        price: 2.99,
+        postDate: '2021-3-11',
+      },
+    ],
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb87']
+  },
+  {
+
+    name: 'Graptoveria Biante',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Succulents',
+    rare: false,
+    description:
+      'Lovely Rose is a small, attractive succulent plant with tightly compacted, plump, gray-green leaves that form a beautiful, rose-like cluster on the top of a bare stem. This mini succulent is easy to grow, and branch.',
+    productStatus: 'In Stock',
+    priceLists: [
+      {
+        price: 5.99,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 2.99,
+        postDate: '2021-3-11',
+      },
+    ],
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb86']
+  },
+  {
+
+    name: 'Echeveria Alba Beauty',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Succulents',
+    rare: false,
+    description:
+      'Echeveria alba beauty features pointy fleshy blueish-green leaves. When stressed, the leaves turn lovely vibrant orange to pink color on the tips. They arent as vibrant in the summer, but they are still really pretty with leaves symmetrically formed.',
+    productStatus: 'In Stock',
+    priceLists: [
+      {
+        price: 5.99,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 2.99,
         postDate: '2021-3-11',
       },
     ],
@@ -86,7 +146,36 @@ const products = [
     reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
     stockIds: ['62a99eb18b5abb7c51972216'],
     imageIds: ['62c699029493c7a44f46fb85']
+  },
+  {
 
+    name: 'Echeveria Mebina',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Succulents',
+    rare: false,
+    description:
+      'due to its red edge leaves, also called red edge echeveria. Its leaves are long and thin, formed close to a rosette, blooming in spring. Mebina is easy to grow to cluster, which is suitable for making small pot combinations.',
+    productStatus: 'In Stock',
+    priceLists: [
+      {
+        price: 4.99,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 1.99,
+        postDate: '2021-3-11',
+      },
+    ],
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb84']
   },
 ];
 
