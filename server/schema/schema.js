@@ -165,7 +165,7 @@ const mutation = new GraphQLObjectType({
         name: {type: new GraphQLNonNull(GraphQLString)},
         priceList: {type: new GraphQLNonNull(GraphQLList(GraphQLString))},
         postDate:{type:new GraphQLNonNull(GraphQLString)},
-        size:{type:new GraphQLNonNull(SizeType)},
+        // size:{type:new GraphQLNonNull(SizeType)},
         colors:{type:new GraphQLNonNull(GraphQLList(GraphQLString))},
         category:{type:new GraphQLNonNull(GraphQLString)},
         rare:{type:new GraphQLNonNull(GraphQLBoolean)},
