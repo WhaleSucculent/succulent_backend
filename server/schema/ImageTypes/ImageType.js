@@ -6,10 +6,11 @@ const ImageType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     category: { type: GraphQLString },
+    name: {type: GraphQLString},
     length: {type: GraphQLInt},
     width: {type: GraphQLInt},
     size: {type: GraphQLInt},
-    format: {type: String},
+    format: { type: GraphQLString },
     imageLink: {type: GraphQLString}
   }),
 });

@@ -10,10 +10,12 @@ import {
   GraphQLInputObjectType,
 } from 'graphql';
 import Customer from '../../models/Customer.js';
+import Image from '../../models/Image.js';
 import Product from '../../models/Product.js';
 import Review from '../../models/Review.js';
 import Stock from '../../models/Stock.js';
 import CustomerType from '../CustomerTypes/CustomerType.js';
+import ImageType from '../ImageTypes/ImageType.js';
 import { dateScalar } from '../utilScalar.js';
 import ReviewType from './ReviewType.js';
 import StockType from './StockType.js';
@@ -108,6 +110,12 @@ const ProductType = new GraphQLObjectType({
         return parent.stockIds.map((stockId) => Stock.findById(stockId));
       },
     },
+    image: {
+      type: new GraphQLList(ImageType),
+      resolve(parent, args) {
+        return parent.imageIds.map((imageId) => Image.findById(imageId));
+      }
+    }
   }),
 });
 

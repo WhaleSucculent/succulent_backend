@@ -26,6 +26,7 @@ const products = [
     colors: ['Mauv', 'Purple', 'Indigo', 'Orange', 'Fuscia'],
     reviewIds: ['62a994a78e7fe122350e1d0d', '62a994a78e7fe122350e1d06'],
     stockIds: ['62a99eb18b5abb7c51972214', '62a99eb18b5abb7c51972213'],
+    imageIds: ['62c699029493c7a44f46fb89']
   },
   {
     _id: '62a99e173c1942691d27c2b8',
@@ -54,6 +55,7 @@ const products = [
     colors: ['Red', 'Khaki', 'Aquamarine', 'Maroon'],
     reviewIds: ['62a994a78e7fe122350e1d02', '62a994a78e7fe122350e1d01'],
     stockIds: ['62a99eb18b5abb7c51972215'],
+    imageIds: ['62c699029493c7a44f46fb88']
   },
   {
     _id: '62a99e173c1942691d27c2bf',
@@ -83,6 +85,8 @@ const products = [
     colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
     reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
     stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb85']
+
   },
 ];
 

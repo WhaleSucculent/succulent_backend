@@ -22,6 +22,9 @@ import Review from './models/Review.js';
 import reviews from './data/reviews.js';
 import Stock from './models/Stock.js';
 import stocks from './data/stocks.js';
+import Image from './models/Image.js';
+import images from './data/images.js';
+
 
 
 dotenv.config();
@@ -41,6 +44,7 @@ const importData = async () => {
     await Review.deleteMany();
     await Product.deleteMany();
     await Stock.deleteMany();
+    await Image.deleteMany();
 
     
 
@@ -50,7 +54,8 @@ const importData = async () => {
     const createPayment = await Payment.insertMany(payments);
     const createProductInCart = await ProductInCart.insertMany(productInCarts);
 
-
+    
+    const createImage = await Image.insertMany(images)
     const createProduct = await Product.insertMany(products);
     const createStock = await Stock.insertMany(stocks);
     const createOrder = await Order.insertMany(orders);
