@@ -102,4 +102,4 @@ const ProductType = new GraphQLObjectType({
   }),
 });
 
-export default ProductType;
+export { ProductType, SizeType };

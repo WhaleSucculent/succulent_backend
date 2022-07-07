@@ -7,7 +7,7 @@ import {
 } from 'graphql';
 import Product from '../../models/Product.js';
 import { dateScalar } from '../utilScalar.js';
-import ProductType from './ProductType.js';
+import {ProductType} from './ProductType.js';
 
 const StockType = new GraphQLObjectType({
   name: 'Stock',
