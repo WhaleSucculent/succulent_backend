@@ -7,6 +7,7 @@ import {
   GraphQLBoolean,
   GraphQLList,
   GraphQLFloat,
+  GraphQLInputObjectType,
 } from 'graphql';
 import Customer from '../../models/Customer.js';
 import Product from '../../models/Product.js';
@@ -29,7 +30,15 @@ const SizeType = new GraphQLObjectType({
     radius: { type: GraphQLString },
   }),
 });
-
+const SizeTypeInput = new GraphQLInputObjectType({
+  name: 'SizeInput',
+  fields: () => ({
+    width: { type: GraphQLString },
+    length: { type: GraphQLString },
+    height: { type: GraphQLString },
+    radius: { type: GraphQLString },
+  })
+});
 // Stock Type
 const StocksType = new GraphQLObjectType({
   name: 'Stock',
@@ -102,4 +111,4 @@ const ProductType = new GraphQLObjectType({
   }),
 });
 
-export { ProductType, SizeType };
+export { ProductType, SizeTypeInput };
