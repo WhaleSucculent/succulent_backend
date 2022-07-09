@@ -28,7 +28,8 @@ const RootQuery = new GraphQLObjectType({
       },
     },
     product: {
-      type: new GraphQLList(ProductType),
+      type: ProductType,
+      args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return Product.findById(args.id);
       },
@@ -40,7 +41,8 @@ const RootQuery = new GraphQLObjectType({
       },
     },
     customer: {
-      type: new GraphQLList(CustomerType),
+      type: CustomerType,
+      args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return Customer.findById(args.id);
       },
@@ -52,7 +54,8 @@ const RootQuery = new GraphQLObjectType({
       },
     },
     order: {
-      type: new GraphQLList(OrderType),
+      type: OrderType,
+      args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return Order.findById(args.id);
       },
