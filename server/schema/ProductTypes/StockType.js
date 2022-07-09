@@ -13,6 +13,7 @@ const StockType = new GraphQLObjectType({
   name: 'Stock',
   fields: () => ({
     id: { type: GraphQLID },
+    total: {type: GraphQLInt},
     product: {
       type: ProductType,
       resolve(parent, args) {
