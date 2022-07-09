@@ -58,10 +58,17 @@ const PriceListType = new GraphQLObjectType({
   name: 'PriceList',
   fields: () => ({
     price: { type: GraphQLFloat },
-    postDate: { type: dateScalar },
+    postDate: { type: GraphQLString },
   }),
 });
 
+const PriceListTypeInput = new GraphQLInputObjectType({
+  name: 'PriceListInput',
+  fields: () => ({
+    price: { type: GraphQLFloat },
+    postDate: { type: GraphQLString },
+  })
+});
 // Product Type
 const ProductType = new GraphQLObjectType({
   name: 'Product',
@@ -111,4 +118,4 @@ const ProductType = new GraphQLObjectType({
   }),
 });
 
-export { ProductType, SizeTypeInput };
+export { ProductType, SizeTypeInput, PriceListTypeInput};

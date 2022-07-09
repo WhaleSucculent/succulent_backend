@@ -13,7 +13,7 @@ import Product from '../models/Product.js';
 import Address from '../models/Address.js';
 import Order from '../models/Order.js';
 import AddressType from './OrderTypes/AddressType.js';
-import {ProductType, SizeTypeInput} from './ProductTypes/ProductType.js';
+import {ProductType, SizeTypeInput, PriceListTypeInput} from './ProductTypes/ProductType.js';
 import CustomerType from './CustomerTypes/CustomerType.js';
 import Customer from '../models/Customer.js';
 import OrderType from './OrderTypes/OrderType.js';
@@ -163,7 +163,7 @@ const mutation = new GraphQLObjectType({
       type: ProductType,
       args:{
         name: {type: new GraphQLNonNull(GraphQLString)},
-        priceList: {type: new GraphQLNonNull(GraphQLList(GraphQLString))},
+        priceList: {type: new GraphQLNonNull(GraphQLList(PriceListTypeInput))},
         postDate:{type:new GraphQLNonNull(GraphQLString)},
         size:{type:new GraphQLNonNull(SizeTypeInput)},
         // size:{type:new GraphQLNonNull(SizeType)},
