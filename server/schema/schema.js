@@ -27,10 +27,22 @@ const RootQuery = new GraphQLObjectType({
         return Product.find();
       },
     },
+    product: {
+      type: new GraphQLList(ProductType),
+      resolve(parent, args) {
+        return Product.findById(args.id);
+      },
+    },
     customers: {
       type: new GraphQLList(CustomerType),
       resolve() {
         return Customer.find();
+      },
+    },
+    customer: {
+      type: new GraphQLList(CustomerType),
+      resolve(parent, args) {
+        return Customer.findById(args.id);
       },
     },
     orders: {
