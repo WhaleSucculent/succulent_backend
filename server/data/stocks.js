@@ -1,6 +1,7 @@
 const stocks = [
   {
     _id: '62a99eb18b5abb7c51972216',
+    total: 10,
     productId: '62a99e173c1942691d27c2bf',
     action: 'In',
     actionAmount: 3,
@@ -9,6 +10,7 @@ const stocks = [
   },
   {
     _id: '62a99eb18b5abb7c51972215',
+    total: 15,
     productId: '62a99e173c1942691d27c2b8',
     action: 'Out',
     actionAmount: 2,
@@ -17,6 +19,7 @@ const stocks = [
   },
   {
     _id: '62a99eb18b5abb7c51972214',
+    total: 10,
     productId: '62a99e173c1942691d27c2b4',
     action: 'Out',
     actionAmount: 1,
@@ -25,6 +28,7 @@ const stocks = [
   },
   {
     _id: '62a99eb18b5abb7c51972213',
+    total: 10,
     productId: '62a99e173c1942691d27c2b4',
     action: 'Out',
     actionAmount: 1,

@@ -27,10 +27,24 @@ const RootQuery = new GraphQLObjectType({
         return Product.find();
       },
     },
+    product: {
+      type: ProductType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Product.findById(args.id);
+      },
+    },
     customers: {
       type: new GraphQLList(CustomerType),
       resolve() {
         return Customer.find();
+      },
+    },
+    customer: {
+      type: CustomerType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Customer.findById(args.id);
       },
     },
     orders: {
@@ -40,37 +54,12 @@ const RootQuery = new GraphQLObjectType({
       },
     },
     order: {
-      type: new GraphQLList(OrderType),
+      type: OrderType,
+      args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return Order.findById(args.id);
       },
     },
-    // projects: {
-    //   type: new GraphQLList(ProjectType),
-    //   resolve() {
-    //     return Project.find();
-    //   },
-    // },
-    // project: {
-    //   type: ProjectType,
-    //   args: { id: { type: GraphQLID } },
-    //   resolve(parent, args) {
-    //     return Project.findById(args.id);
-    //   },
-    // },
-    // clients: {
-    //   type: new GraphQLList(ClientType),
-    //   resolve() {
-    //     return Client.find();
-    //   },
-    // },
-    // client: {
-    //   type: ClientType,
-    //   args: { id: { type: GraphQLID } },
-    //   resolve(parent, args) {
-    //     return Client.findById(args.id);
-    //   },
-    // },
   },
 });
 
@@ -162,26 +151,26 @@ const mutation = new GraphQLObjectType({
     addProduct:{
       type: ProductType,
       args:{
-        name: {type: new GraphQLNonNull(GraphQLString)},
-        priceList: {type: new GraphQLNonNull(GraphQLList(PriceListTypeInput))},
-        postDate:{type:new GraphQLNonNull(GraphQLString)},
-        size:{type:new GraphQLNonNull(SizeTypeInput)},
-        // size:{type:new GraphQLNonNull(SizeType)},
-        colors:{type:new GraphQLNonNull(GraphQLList(GraphQLString))},
-        category:{type:new GraphQLNonNull(GraphQLString)},
-        rare:{type:new GraphQLNonNull(GraphQLBoolean)},
-        description:{type:new GraphQLNonNull(GraphQLString)},
-        productStatus:{type:new GraphQLNonNull(GraphQLString)},
-        length:{type:new GraphQLNonNull(GraphQLString)},
-        review:{type:new GraphQLNonNull(GraphQLList(GraphQLString))},
-        stock:{type:new GraphQLNonNull(GraphQLList(GraphQLString))},
-
+        name: {type:  GraphQLNonNull(GraphQLString)},
+        priceList: {type:  GraphQLNonNull(GraphQLList(GraphQLString))},
+        postDate:{type: GraphQLNonNull(GraphQLString)},
+        size:{type: GraphQLNonNull(SizeTypeInput)},
+        // size:{type: GraphQLNonNull(SizeType)},
+        colors:{type: GraphQLNonNull(GraphQLList(GraphQLString))},
+        category:{type: GraphQLNonNull(GraphQLString)},
+        rare:{type: GraphQLNonNull(GraphQLBoolean)},
+        description:{type: GraphQLNonNull(GraphQLString)},
+        productStatus:{type: GraphQLNonNull(GraphQLString)},
+        length:{type: GraphQLNonNull(GraphQLString)},
+        review:{type: GraphQLNonNull(GraphQLList(GraphQLString))},
+        stock:{type: GraphQLNonNull(GraphQLList(GraphQLString))},
+        imageIds: { type: GraphQLNonNull(GraphQLList(GraphQLID))}
       },
       resolve(parent,args){
         const product = new Product({
           name: args.name,
-          priceList: args.priceList,
           postDate: args.postDate,
+          priceList: args.priceList,
           // size: args.size,
           colors: args.colors,
           category: args.category,
@@ -191,6 +180,7 @@ const mutation = new GraphQLObjectType({
           length: args.length,
           review: args.review,
           stock: args.stock,
+          images: args.imageIds
         });
         return product.save();
       }
@@ -199,18 +189,18 @@ const mutation = new GraphQLObjectType({
     addCustomer:{
       type: CustomerType,
       args:{
-        email: {type: new GraphQLNonNull(GraphQLString)},
-        password: {type: new GraphQLNonNull(GraphQLString)},
-        firstName: {type: new GraphQLNonNull(GraphQLString)},
-        lastName: {type: new GraphQLNonNull(GraphQLString)},
-        phone: {type: new GraphQLNonNull(GraphQLString)},
-        status: {type: new GraphQLNonNull(GraphQLString)},
-        role: {type: new GraphQLNonNull(GraphQLString)},
-        wechatId: {type: new GraphQLNonNull(GraphQLString)},
-        paypalId: {type: new GraphQLNonNull(GraphQLString)},
-        creditCards:{type: new GraphQLList(GraphQLID)},
-        address: {type: new GraphQLList(GraphQLID)},
-        orders:{type: new GraphQLList(GraphQLID)},
+        email: {type: GraphQLNonNull(GraphQLString)},
+        password: {type: GraphQLNonNull(GraphQLString)},
+        firstName: {type: GraphQLNonNull(GraphQLString)},
+        lastName: {type: GraphQLNonNull(GraphQLString)},
+        phone: {type: GraphQLNonNull(GraphQLString)},
+        status: {type: GraphQLNonNull(GraphQLString)},
+        role: {type: GraphQLNonNull(GraphQLString)},
+        wechatId: {type: GraphQLNonNull(GraphQLString)},
+        paypalId: {type: GraphQLNonNull(GraphQLString)},
+        creditCards:{type: GraphQLList(GraphQLID)},
+        address: {type: GraphQLList(GraphQLID)},
+        orders:{type: GraphQLList(GraphQLID)},
 
       },
       //creating a new customer using the mongoose model
@@ -242,106 +232,3 @@ const schema = new GraphQLSchema({
 
 export default schema;
 
-// Add a new Client
-// addClient: {
-//   type: ClientType,
-//   args: {
-//     name: { type: GraphQLNonNull(GraphQLString) },
-//     email: { type: GraphQLNonNull(GraphQLString) },
-//     phone: { type: GraphQLNonNull(GraphQLString) },
-//   },
-//   resolve(parent, args) {
-//     const client = new Client({
-//       name: args.name,
-//       email: args.email,
-//       phone: args.phone,
-//     });
-
-//     return client.save();
-//   },
-// },
-// // Delete a Client
-// deleteClient: {
-//   type: ClientType,
-//   args: {
-//     id: { type: GraphQLNonNull(GraphQLID) },
-//   },
-//   resolve(parent, args) {
-//     return Client.findByIdAndRemove(args.id);
-//   },
-// },
-
-// // add a project
-// addProject: {
-//   type: ProjectType,
-//   args: {
-//     name: { type: GraphQLNonNull(GraphQLString) },
-//     description: { type: GraphQLNonNull(GraphQLString) },
-//     status: {
-//       type: new GraphQLEnumType({
-//         name: 'ProjectStatus',
-//         values: {
-//           new: { value: 'Not Started' },
-//           progress: { value: 'In Progress' },
-//           completed: { value: 'Completed' },
-//         },
-//       }),
-//       defaultValue: 'Not Started',
-//     },
-//     clientId: { type: GraphQLNonNull(GraphQLID) },
-//   },
-//   resolve(parent, args) {
-//     const project = new Project({
-//       name: args.name,
-//       description: args.description,
-//       status: args.status,
-//       clientId: args.clientId,
-//     });
-
-//     return project.save();
-//   },
-// },
-
-// // delete a project
-// deleteProject: {
-//   type: ProjectType,
-//   args: {
-//     id: { type: GraphQLNonNull(GraphQLID) },
-//   },
-//   resolve(parent, args) {
-//     return Project.findByIdAndRemove(args.id);
-//   },
-// },
-
-// // Update a project
-// updateProject: {
-//   type: ProjectType,
-//   args: {
-//     id: { type: GraphQLNonNull(GraphQLID) },
-//     name: { type: GraphQLString },
-//     description: { type: GraphQLString },
-//     status: {
-//       type: new GraphQLEnumType({
-//         name: 'ProjectStatusUpdate',
-//         values: {
-//           new: { value: 'Not Started' },
-//           progress: { value: 'In Progress' },
-//           completed: { value: 'Completed' },
-//         },
-//       }),
-//     },
-//   },
-//   resolve(parent, args) {
-//     return Project.findByIdAndUpdate(
-//       args.id,
-//       {
-//         $set: {
-//           name: args.name,
-//           description: args.description,
-//           status: args.status,
-//         },
-//       },
-//       { new: true }
-//     );
-//   },
-// },
