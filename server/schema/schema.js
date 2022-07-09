@@ -161,7 +161,7 @@ const mutation = new GraphQLObjectType({
         rare:{type: GraphQLNonNull(GraphQLBoolean)},
         description:{type: GraphQLNonNull(GraphQLString)},
         productStatus:{type: GraphQLNonNull(GraphQLString)},
-        length:{type: GraphQLNonNull(GraphQLString)},
+
         review:{type: GraphQLNonNull(GraphQLList(GraphQLString))},
         stock:{type: GraphQLNonNull(GraphQLList(GraphQLString))},
         imageIds: { type: GraphQLNonNull(GraphQLList(GraphQLID))}
@@ -170,17 +170,17 @@ const mutation = new GraphQLObjectType({
         const product = new Product({
           name: args.name,
           postDate: args.postDate,
-          priceList: args.priceList,
-          // size: args.size,
+          priceLists: args.priceList,
+          size: args.size,
           colors: args.colors,
           category: args.category,
           rare: args.rare,
           description: args.description,
           productStatus: args.productStatus,
-          length: args.length,
-          review: args.review,
-          stock: args.stock,
-          images: args.imageIds
+ 
+          reviewIds: args.review,
+          stockIds: args.stock,
+          imageIds: args.imageIds
         });
         return product.save();
       }
