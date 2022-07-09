@@ -152,7 +152,7 @@ const mutation = new GraphQLObjectType({
       type: ProductType,
       args:{
         name: {type:  GraphQLNonNull(GraphQLString)},
-        priceList: {type:  GraphQLNonNull(GraphQLList(GraphQLString))},
+        priceList: {type:  GraphQLNonNull(GraphQLList(PriceListTypeInput))},
         postDate:{type: GraphQLNonNull(GraphQLString)},
         size:{type: GraphQLNonNull(SizeTypeInput)},
         // size:{type: GraphQLNonNull(SizeType)},
