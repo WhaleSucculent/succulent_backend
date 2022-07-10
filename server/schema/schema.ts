@@ -10,7 +10,6 @@ import {
   GraphQLBoolean,
 } from 'graphql';
 import Product from '../models/Product.js';
-import Address from '../models/Address.js';
 import Order from '../models/Order.js';
 import AddressType from './OrderTypes/AddressType.js';
 import {ProductType, SizeTypeInput, PriceListTypeInput} from './ProductTypes/ProductType.js';
@@ -18,6 +17,7 @@ import CustomerType from './CustomerTypes/CustomerType.js';
 import Customer from '../models/Customer.js';
 import OrderType from './OrderTypes/OrderType.js';
 import { dateScalar } from './utilScalar.js';
+import {Address} from '../models/Address.js';
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -168,6 +168,7 @@ const mutation = new GraphQLObjectType({
       },
       resolve(parent,args){
         const product = new Product({
+          
           name: args.name,
           postDate: args.postDate,
           priceLists: args.priceList,
