@@ -9,7 +9,8 @@ import {
 } from 'graphql';
 import AddressType from '../OrderTypes/AddressType.js';
 import CreditCardType from './CreditCardType.js';
-import { dateScalar } from '../utilScalar.js';
+//import { dateScalar } from '../utilScalar.js';
+import { MyDate } from '../DataScalar.js';
 import CreditCard from '../../models/CreditCard.js';
 import Address from '../../models/Address.js';
 import OrderType from '../OrderTypes/OrderType.js';

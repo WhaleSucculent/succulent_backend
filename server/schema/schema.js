@@ -18,6 +18,7 @@ import CustomerType from './CustomerTypes/CustomerType.js';
 import Customer from '../models/Customer.js';
 import OrderType from './OrderTypes/OrderType.js';
 import { dateScalar } from './utilScalar.js';
+import { MyDate } from './DataScalar.js';
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -215,7 +216,7 @@ const mutation = new GraphQLObjectType({
                 rare: args.rare,
                 description: args.description,
                 productStatus: args.productStatus,
-                stock: args.stock,
+                stockIds: args.stock,
                 imageIds: args.imageIds
               },
 
@@ -264,12 +265,13 @@ const mutation = new GraphQLObjectType({
           role: args.role,
           wechatId: args.wechatId,
           paypalId: args.paypalId,
-          creditCards: args.creditCards,
-          address: args.address,
-          orders: args.orders
+          creditCardIds: args.creditCards,
+          addressIds: args.address,
+          orderIds: args.orders
         });
         return customer.save();
       },
+    },
       //delete a customer
       deleteCustomer:{
         type: CustomerType,
@@ -310,14 +312,14 @@ const mutation = new GraphQLObjectType({
                 role: args.role,
                 wechatId: args.wechatId,
                 paypalId: args.paypalId,
-                creditCards: args.creditCards,
+                creditCardIds: args.creditCards,
               },
             },
             {new: true}
             );
         }
       }
-    }
+    
   },
 });
 

@@ -16,11 +16,10 @@ import Review from '../../models/Review.js';
 import Stock from '../../models/Stock.js';
 import CustomerType from '../CustomerTypes/CustomerType.js';
 import ImageType from '../ImageTypes/ImageType.js';
-import { dateScalar } from '../utilScalar.js';
+//import { dateScalar } from '../utilScalar.js';
+import { MyDate } from '../DataScalar.js';
 import ReviewType from './ReviewType.js';
 import StockType from './StockType.js';
-
-// Category Type
 
 // Size type
 const SizeType = new GraphQLObjectType({
@@ -51,7 +50,7 @@ const StocksType = new GraphQLObjectType({
     }},
     amount: { type: GraphQLInt },
     action: { type: GraphQLString },
-    createTime: { type: dateScalar },
+    createTime: { type: MyDate },
   }),
 });
 
@@ -60,7 +59,7 @@ const PriceListType = new GraphQLObjectType({
   name: 'PriceList',
   fields: () => ({
     price: { type: GraphQLFloat },
-    postDate: { type: GraphQLString },
+    postDate: { type: MyDate },
   }),
 });
 
@@ -68,7 +67,7 @@ const PriceListTypeInput = new GraphQLInputObjectType({
   name: 'PriceListInput',
   fields: () => ({
     price: { type: GraphQLFloat },
-    postDate: { type: GraphQLString },
+    postDate: { type: MyDate },
   })
 });
 // Product Type
@@ -83,7 +82,7 @@ const ProductType = new GraphQLObjectType({
         return parent.priceLists;
       },
     },
-    postDate: { type: dateScalar },
+    postDate: { type: MyDate },
     size: {
       type: SizeType,
       resolve(parent, args) {

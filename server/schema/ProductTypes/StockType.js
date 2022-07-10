@@ -6,8 +6,9 @@ import {
   GraphQLString,
 } from 'graphql';
 import Product from '../../models/Product.js';
-import { dateScalar } from '../utilScalar.js';
+//import { dateScalar } from '../utilScalar.js';
 import {ProductType} from './ProductType.js';
+import { MyDate } from '../DataScalar.js';
 
 const StockType = new GraphQLObjectType({
   name: 'Stock',
@@ -22,7 +23,7 @@ const StockType = new GraphQLObjectType({
     },
     action: { type: GraphQLString },
     actionAmount: { type: GraphQLInt },
-    actionDate: {type: dateScalar},
+    actionDate: {type: MyDate},
     actionPrice: {type: GraphQLFloat},
   }),
 });

@@ -14,7 +14,8 @@ import Payment from '../../models/Payment.js';
 import ProductInCart from '../../models/ProductInCart.js';
 import AddressType from './AddressType.js';
 import CustomerType from '../CustomerTypes/CustomerType.js';
-import { dateScalar } from '../utilScalar.js';
+//import { dateScalar } from '../utilScalar.js';
+import { MyDate } from '../DataScalar.js';
 import DeliveryType from './DeliveryType.js';
 import PaymentType from './PaymentType.js';
 import ProductInCartType from './ProductInCartType.js';
@@ -41,7 +42,7 @@ const OrderType = new GraphQLObjectType({
         return Address.findById(parent.billingAddressId);
       },
     },
-    orderDate: { type: dateScalar },
+    orderDate: { type: MyDate },
     orderStatus: { type: GraphQLString },
     productsInCart: {
       type: new GraphQLList(ProductInCartType),
