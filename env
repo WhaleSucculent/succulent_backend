@@ -1,4 +1,0 @@
-PORT=5000
-NODE_ENV='development'
-MONGO_URI='mongodb://dbadmin:666@mgdb.eastus.cloudapp.azure.com:27017/succulent'
-AZURE_STORAGE_CONNECTION_STRING='DefaultEndpointsProtocol=https;AccountName=cs4100320012e7027bb;AccountKey=RAlUMWb8Vg5FTqGUKg1QVrX33bXlbd0Kt55tk//nFG5JR50xBw8xFtKZyCXWF/edBD1BWDpOz1qs70sb/git5A==;EndpointSuffix=core.windows.net'
