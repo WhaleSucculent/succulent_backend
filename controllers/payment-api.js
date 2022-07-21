@@ -27,7 +27,7 @@ const newPay = async (req, res) => {
         // }?is_stripe=true&is_cart=${currentRoute.includes(
         //   "cart"
         // )}&product_ids=${productIds}`,
-        success_url: `https://succulentbackend.azurewebsites.net${currentRoute}?is_stripe=true`,
+        success_url: `https://succulent-frontend.vercel.app${currentRoute}?is_stripe=true`,
         cancel_url: `${req.headers.origin}${cancelRoute}`,
       });
 
