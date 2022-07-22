@@ -71,15 +71,6 @@ const app = express();
 
 connectDB();
 
-app.use(function(req, res, next) {
-   // update to match the domain you will make the request from
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
-
 app.use(cors());
 
 app.use(
@@ -92,11 +83,11 @@ app.use(
 
 app.use(urlencoded({extended:false}))
  
-app.get('/', function(req, res){
-    res.render('Home', {
-       key: Publishable_Key
-    })
-})
+app.get('/payment-api',(req,res)=>{
+  res.set('Access-Control-Allow-Origin', '*');
+  res.json(payment-api)
+  })
+
 app.use('/', routes);
 
 app.listen(port, console.log(`Server running on port ${port}`));
