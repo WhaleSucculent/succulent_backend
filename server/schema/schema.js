@@ -13,7 +13,7 @@ import Product from '../models/Product.js';
 import Address from '../models/Address.js';
 import Order from '../models/Order.js';
 import AddressType from './OrderTypes/AddressType.js';
-import {ProductType, SizeTypeInput, PriceListTypeInput} from './ProductTypes/ProductType.js';
+import { ProductType, SizeTypeInput, PriceListTypeInput } from './ProductTypes/ProductType.js';
 import CustomerType from './CustomerTypes/CustomerType.js';
 import Customer from '../models/Customer.js';
 import OrderType from './OrderTypes/OrderType.js';
@@ -149,25 +149,25 @@ const mutation = new GraphQLObjectType({
       },
     },
     //Add a product
-    addProduct:{
+    addProduct: {
       type: ProductType,
-      args:{
-        name: {type:  GraphQLNonNull(GraphQLString)},
-        priceList: {type:  GraphQLNonNull(GraphQLList(PriceListTypeInput))},
-        postDate:{type: GraphQLNonNull(GraphQLString)},
-        size:{type: GraphQLNonNull(SizeTypeInput)},
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        priceList: { type: GraphQLNonNull(GraphQLList(PriceListTypeInput)) },
+        postDate: { type: GraphQLNonNull(GraphQLString) },
+        size: { type: GraphQLNonNull(SizeTypeInput) },
         // size:{type: GraphQLNonNull(SizeType)},
-        colors:{type: GraphQLNonNull(GraphQLList(GraphQLString))},
-        category:{type: GraphQLNonNull(GraphQLString)},
-        rare:{type: GraphQLNonNull(GraphQLBoolean)},
-        description:{type: GraphQLNonNull(GraphQLString)},
-        productStatus:{type: GraphQLNonNull(GraphQLString)},
+        colors: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
+        category: { type: GraphQLNonNull(GraphQLString) },
+        rare: { type: GraphQLNonNull(GraphQLBoolean) },
+        description: { type: GraphQLNonNull(GraphQLString) },
+        productStatus: { type: GraphQLNonNull(GraphQLString) },
 
-        review:{type: GraphQLNonNull(GraphQLList(GraphQLString))},
-        stock:{type: GraphQLNonNull(GraphQLList(GraphQLString))},
-        imageIds: { type: GraphQLNonNull(GraphQLList(GraphQLID))}
+        review: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
+        stock: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
+        imageIds: { type: GraphQLNonNull(GraphQLList(GraphQLID)) }
       },
-      resolve(parent,args){
+      resolve(parent, args) {
         const product = new Product({
           name: args.name,
           postDate: args.postDate,
@@ -184,77 +184,77 @@ const mutation = new GraphQLObjectType({
         });
         return product.save();
       }
+    },
+    //Update a project
+    updateProduct: {
+      type: ProductType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        name: { type: GraphQLString },
+        postDate: { type: GraphQLString },
+        priceLists: { type: GraphQLList(PriceListTypeInput) },
+        size: { type: SizeTypeInput },
+        colors: { type: GraphQLList(GraphQLString) },
+        category: { type: GraphQLString },
+        rare: { type: GraphQLBoolean },
+        description: { type: GraphQLString },
+        productStatus: { type: GraphQLString },
+        stock: { type: GraphQLList(GraphQLString) },
+        imageIds: { type: GraphQLList(GraphQLID) },
+
       },
-      //Update a project
-      updateProduct:{
-        type: ProductType,
-        args:{
-          id: {type: GraphQLNonNull(GraphQLID)},
-          name: {type: GraphQLString},
-          postDate: {type: GraphQLString},
-          priceLists: {type: GraphQLList(PriceListTypeInput)},
-          size: {type: SizeTypeInput},
-          colors: {type: GraphQLList(GraphQLString)},
-          category: {type: GraphQLString},
-          rare: {type: GraphQLBoolean},
-          description: {type: GraphQLString},
-          productStatus: {type: GraphQLString},
-          stock: {type: GraphQLList(GraphQLString)},
-          imageIds: {type: GraphQLList(GraphQLID)},
-
-        },
-        resolve(parent, args){
-          return Product.findByIdAndUpdate(args.id,
-            {
-              $set:{
-                name: args.name,
-                postDate: args.postDate,
-                priceLists: args.priceLists,
-                size: args.size,
-                colors: args.colors,
-                category: args.category,
-                rare: args.rare,
-                description: args.description,
-                productStatus: args.productStatus,
-                stockIds: args.stock,
-                imageIds: args.imageIds
-              },
-
+      resolve(parent, args) {
+        return Product.findByIdAndUpdate(args.id,
+          {
+            $set: {
+              name: args.name,
+              postDate: args.postDate,
+              priceLists: args.priceLists,
+              size: args.size,
+              colors: args.colors,
+              category: args.category,
+              rare: args.rare,
+              description: args.description,
+              productStatus: args.productStatus,
+              stockIds: args.stock,
+              imageIds: args.imageIds
             },
-            {new: true});
-        }
-      },
-      //delete a product
 
-      deleteProduct:{
-        type: ProductType,
-        args:{
-          id: {type: new GraphQLNonNull(GraphQLID)},
-        },
-        resolve(parent, args){
-          return Product.findByIdAndRemove(args.id);
-        }
+          },
+          { new: true });
+      }
+    },
+    //delete a product
+
+    deleteProduct: {
+      type: ProductType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
       },
+      resolve(parent, args) {
+        return Product.findByIdAndRemove(args.id);
+      }
+    },
     //Add a customer
-    addCustomer:{
+    addCustomer: {
       type: CustomerType,
-      args:{
-        email: {type: GraphQLNonNull(GraphQLString)},
-        password: {type: GraphQLNonNull(GraphQLString)},
-        firstName: {type: GraphQLNonNull(GraphQLString)},
-        lastName: {type: GraphQLNonNull(GraphQLString)},
-        phone: {type: GraphQLNonNull(GraphQLString)},
-        status: {type: GraphQLNonNull(GraphQLString)},
-        role: {type: GraphQLNonNull(GraphQLString)},
-        wechatId: {type: GraphQLNonNull(GraphQLString)},
-        paypalId: {type: GraphQLNonNull(GraphQLString)},
-        creditCards:{type: GraphQLList(GraphQLID)},
-        address: {type: GraphQLList(GraphQLID)},
-        orders:{type: GraphQLList(GraphQLID)},
+      args: {
+        email: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+        firstName: { type: GraphQLNonNull(GraphQLString) },
+        lastName: { type: GraphQLNonNull(GraphQLString) },
+        phone: { type: GraphQLNonNull(GraphQLString) },
+        status: { type: GraphQLNonNull(GraphQLString) },
+        role: { type: GraphQLNonNull(GraphQLString) },
+        wechatId: { type: GraphQLNonNull(GraphQLString) },
+        paypalId: { type: GraphQLNonNull(GraphQLString) },
+        creditCards: { type: GraphQLList(GraphQLID) },
+        address: { type: GraphQLList(GraphQLID) },
+        orders: { type: GraphQLList(GraphQLID) },
 
       },
       //creating a new customer using the mongoose model
-      resolve(parent,args){
+      resolve(parent, args) {
         const customer = new Customer({
           email: args.email,
           password: args.password,
@@ -272,54 +272,85 @@ const mutation = new GraphQLObjectType({
         return customer.save();
       },
     },
-      //delete a customer
-      deleteCustomer:{
-        type: CustomerType,
-        args:{
-          id: {type: new GraphQLNonNull(GraphQLID)},
-        },
-        resolve(parent, args){
-          return Customer.findByIdAndRemove(args.id);
-        }
+    //delete a customer
+    deleteCustomer: {
+      type: CustomerType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
       },
-      //update a customer
-      updateCustomer:{
-        type: CustomerType,
-        args:{
-          id: {type: GraphQLNonNull(GraphQLID)},
-          firstName: {type: GraphQLString},
-          lastName: {type: GraphQLString},
-          email: {type: GraphQLString},
-          password: {type: GraphQLString},
-          phone: {type: GraphQLString},
-          status: {type: GraphQLString},
-          role: {type: GraphQLString},
-          wechatId: {type: GraphQLString},
-          paypalId: {type: GraphQLString},
-          creditCards: {type: GraphQLList(GraphQLID)},
+      resolve(parent, args) {
+        return Customer.findByIdAndRemove(args.id);
+      }
+    },
+    //update a customer
+    updateCustomer: {
+      type: CustomerType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        firstName: { type: GraphQLString },
+        lastName: { type: GraphQLString },
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+        phone: { type: GraphQLString },
+        status: { type: GraphQLString },
+        role: { type: GraphQLString },
+        wechatId: { type: GraphQLString },
+        paypalId: { type: GraphQLString },
+        creditCards: { type: GraphQLList(GraphQLID) },
 
-        },
-        resolve(parent, args){
-          return Customer.findByIdAndUpdate(args.id,
-            {
-              $set:{
-                firstName: args.firstName,
-                lastName: args.lastName,
-                email: args.email,
-                password: args.password,
-                phone: args.phone,
-                status: args.status,
-                role: args.role,
-                wechatId: args.wechatId,
-                paypalId: args.paypalId,
-                creditCardIds: args.creditCards,
-              },
+      },
+      resolve(parent, args) {
+        return Customer.findByIdAndUpdate(args.id,
+          {
+            $set: {
+              firstName: args.firstName,
+              lastName: args.lastName,
+              email: args.email,
+              password: args.password,
+              phone: args.phone,
+              status: args.status,
+              role: args.role,
+              wechatId: args.wechatId,
+              paypalId: args.paypalId,
+              creditCardIds: args.creditCards,
             },
-            {new: true}
-            );
+          },
+          { new: true }
+        );
+      }
+    },
+
+    //Register a new Customer
+    registerCustomer: {
+      type: CustomerType,
+      args: {
+        email: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        const hashedPassword = argon2.hash(args.password);
+        const customer = new Customer({
+          email: args.email,
+          password: hashedPassword,
+        });
+        return customer.save();
+      }
+    },
+
+    loginCustomer: {
+      type: CustomerType,
+      args: {
+        email: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args){
+        const user = Customer.findOne({email: email})
+        
+        if (user && (user.matchPassword)) {
+          
         }
       }
-    
+    }
   },
 });
 
