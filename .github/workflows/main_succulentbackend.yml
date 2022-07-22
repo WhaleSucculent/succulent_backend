@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: '16.x'
 
-      - run: npm ci
+      - run: npm install
       - run: npm run azure
           
       - name: Zip artifact for deployment
