@@ -71,7 +71,11 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+const options = {
+  origin: 'https://succulent-frontend.vercel.app',
+  }
+
+app.use(cors(options));
 
 app.use(
   '/graphql',
@@ -82,11 +86,6 @@ app.use(
 );
 
 app.use(urlencoded({extended:false}))
- 
-app.get('/payment-api',(req,res)=>{
-  res.set('Access-Control-Allow-Origin', '*');
-  res.json(payment-api)
-  })
 
 app.use('/', routes);
 
