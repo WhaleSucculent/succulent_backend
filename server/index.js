@@ -71,11 +71,7 @@ const app = express();
 
 connectDB();
 
-const options = {
-  origin: 'https://succulent-frontend.vercel.app',
-  }
-
-app.use(cors(options));
+app.use(cors());
 
 app.use(
   '/graphql',
