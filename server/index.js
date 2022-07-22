@@ -72,12 +72,6 @@ const app = express();
 connectDB();
 
 app.use(cors());
-app.post("/payment-api", cors(), (req, res) => {
-  console.info("POST /payment-api");
-  res.json({
-    text: "CORS requests are working. [POST]"
-  });
-});
 
 app.use(
   '/graphql',
