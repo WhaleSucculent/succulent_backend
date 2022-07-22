@@ -50,7 +50,7 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  uri: "https://succulentbackend.azurewebsites.net/graphql",
+  uri: 'http://localhost:5000/graphql',
   cache,
 });
 
