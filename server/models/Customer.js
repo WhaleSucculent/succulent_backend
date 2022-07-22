@@ -15,5 +15,6 @@ const CustomerSchema = new mongoose.Schema({
   orderIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
 });
 
+
 const Customer = mongoose.model('Customer', CustomerSchema);
 export default Customer;
