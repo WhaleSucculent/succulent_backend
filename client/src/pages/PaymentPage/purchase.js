@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 export const Purchase = ({ price, tag, productIds, searchQuery, children }) => {
 	const handleBuy = () => {
-		fetch('https://succulentbackend.azurewebsites.net:5000/payment-api', {
+		fetch('payment-api', {
 			method: 'POST',
 			headers: {
 			  'Content-Type': 'application/json',

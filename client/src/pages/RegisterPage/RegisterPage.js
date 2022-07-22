@@ -16,8 +16,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import axios from "commons/axios";
 import { toast } from "react-toastify";
-import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "mutations/userMutations";
+// import { useMutation } from "@apollo/client";
+// import { REGISTER_USER } from "mutations/userMutations";
 
 function Copyright(props) {
   return (
