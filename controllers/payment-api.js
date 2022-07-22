@@ -3,13 +3,9 @@ import Stripe from 'stripe';
 const stripe = Stripe('sk_test_51LKTrMA5EeipctR93rEE3ADPuXTkoF6okOrYuD7WosQaOorJGJHTlaaNryr9k62wXPh1O8lsW4jAowAmHPnH42Yt006EQbnHJa');
 
 const newPay = async (req, res) => {
-  res.header("Access-Control-Allow-Origin: *");
-  res.header("Access-Control-Allow-Credentials: true ");
-  res.header("Access-Control-Allow-Methods: OPTIONS, GET, POST");
-  res.header("Access-Control-Allow-Headers: Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control");
-  
+    
   const { totalAmount, cancelRoute, productIds, currentRoute } = req.body;
-  
+
   try {
     // Create Checkout Sessions from body params.
     const session = await stripe.checkout.sessions.create({

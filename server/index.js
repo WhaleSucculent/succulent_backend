@@ -71,6 +71,13 @@ const app = express();
 
 connectDB();
 
+app.use(function(req, res, next) {
+   // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "https://succulent-frontend.vercel.app");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use(cors());
 
 app.use(
@@ -82,9 +89,6 @@ app.use(
 );
 
 app.use(urlencoded({extended:false}))
-app.use(json())
- 
-
  
 app.get('/', function(req, res){
     res.render('Home', {
