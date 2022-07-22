@@ -5,9 +5,12 @@ import { graphqlHTTP } from 'express-graphql';
 import connectDB from './config/db.js';
 import cors from 'cors';
 import schema from './schema/schema.js';
+import routes from '../routes/payment-api.js';
+import { join } from 'path';
 import { BlobServiceClient } from '@azure/storage-blob';
 import { v1 as uuidv1 } from 'uuid';
-
+import pkg from 'body-parser';
+const { urlencoded, json } = pkg;
 
 
 // Load .env file content to process.env
@@ -68,7 +71,11 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+const options = {
+  origin: 'https://succulent-frontend.vercel.app',
+  }
+
+app.use(cors(options));
 
 app.use(
   '/graphql',
@@ -77,5 +84,9 @@ app.use(
     graphiql: process.env.NODE_ENV === 'development',
   })
 );
+
+app.use(urlencoded({extended:false}))
+
+app.use('/', routes);
 
 app.listen(port, console.log(`Server running on port ${port}`));
