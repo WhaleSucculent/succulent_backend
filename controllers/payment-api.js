@@ -1,6 +1,12 @@
 import Stripe from 'stripe';
+import dotenv from 'dotenv';
 
-const stripe = Stripe('sk_test_51LKTrMA5EeipctR93rEE3ADPuXTkoF6okOrYuD7WosQaOorJGJHTlaaNryr9k62wXPh1O8lsW4jAowAmHPnH42Yt006EQbnHJa');
+// Load .env file content to process.env
+dotenv.config();
+const secret_key = process.env.STRIPE_SECRET_KEY;
+const domain = process.env.DOMAIN;
+
+const stripe = Stripe(secret_key);
 
 const newPay = async (req, res) => {
     
@@ -18,7 +24,7 @@ const newPay = async (req, res) => {
               name: "Whale Succulent Supply",
               images: ["https://i.imgur.com/8DYoXXs.jpeg"],
             },
-            unit_amount: parseFloat(totalAmount, 10) * 100,
+            unit_amount: Math.round(totalAmount)*100,
           },
           quantity: 1,
         },
@@ -29,7 +35,7 @@ const newPay = async (req, res) => {
       // }?is_stripe=true&is_cart=${currentRoute.includes(
       //   "cart"
       // )}&product_ids=${productIds}`,
-      success_url: `https://succulent-frontend.vercel.app${currentRoute}?is_stripe=true`,
+      success_url: `${domain}${currentRoute}?is_stripe=true`,
       cancel_url: `${req.headers.origin}${cancelRoute}`,
     });
 

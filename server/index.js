@@ -82,6 +82,7 @@ app.use(
 );
 
 app.use(urlencoded({extended:false}))
+app.use(json())
 
 app.use('/', routes);
 
