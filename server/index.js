@@ -5,7 +5,7 @@ import { graphqlHTTP } from 'express-graphql';
 import connectDB from './config/db.js';
 import cors from 'cors';
 import schema from './schema/schema.js';
-import routes from '../routes/payment-api.js';
+import routes from './routes/payment-api.js';
 import { join } from 'path';
 import { BlobServiceClient } from '@azure/storage-blob';
 import { v1 as uuidv1 } from 'uuid';
@@ -84,6 +84,6 @@ app.use(
 app.use(urlencoded({extended:false}))
 app.use(json())
 
-app.use('/', routes);
+// app.use('/', routes);
 
 app.listen(port, console.log(`Server running on port ${port}`));

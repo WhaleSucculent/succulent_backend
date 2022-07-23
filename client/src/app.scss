@@ -1,0 +1,38 @@
+@charset 'UTF-8';
+
+//import font
+@import url('https://fonts.googleapis.com/css?family=Nunito:300,700');
+
+//set colors
+
+$purple: #c9168d;
+$pink: #fa7c91;
+$dark: #333;
+$beige-lighter: rgb(245,245,245);
+
+//update global variables
+$family-sans-serif: 'Nunito', sans-serif;
+$primary: $purple;
+$link: $dark;
+$danger: $pink;
+
+//update component variables
+$body-background-color: $beige-lighter;
+
+
+@import '../../node_modules/bulma/bulma.sass';
+
+//import icon
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+
+// .login-wrapper {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100vh;
+//     .login-box {
+//         width: 350px;
+//         padding: 1.5rem 1.5rem 2rem 1.5rem;
+//     }
+
+// }
