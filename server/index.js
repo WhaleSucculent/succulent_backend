@@ -72,7 +72,7 @@ const app = express();
 connectDB();
 
 app.use(cors({
-  origin: process.env.CORS_ORIGIN
+  origin: "*"
 }));
 
 app.use(
