@@ -6,15 +6,78 @@ import connectDB from './config/db.js';
 import cors from 'cors';
 import schema from './schema/schema.js';
 import routes from '../server/routes/payment-api.js';
+import morgan from 'morgan'
 import { join } from 'path';
 import { BlobServiceClient } from '@azure/storage-blob';
 import { v1 as uuidv1 } from 'uuid';
-import pkg from 'body-parser';
-const { urlencoded, json } = pkg;
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import cookieParser from 'cookie-parser';
+import path from 'path';
 
 
 // Load .env file content to process.env
 dotenv.config();
+
+const port = process.env.PORT || 5000;
+
+const app = express();
+
+// connect to mongoDB
+
+connectDB();
+
+app.use(cors({
+  origin: "*"
+}));
+
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    graphiql: process.env.NODE_ENV === 'development',
+  })
+);
+
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+
+app.use(cookieParser());
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+app.use(cors());
+
+
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/client/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running...');
+  });
+}
+
+app.use('/', routes);
+
+
+// when the address don't meet / and /api/products, it will call the app.use(notFound), app.use(notFound) will pass the error to errorHandler
+app.use(notFound);
+// errorHandler will handle the error throw by productRouter.js and error passed by notFound
+app.use(errorHandler);
+
+
+app.listen(
+  port,
+  console.log(
+    `Server running in ${process.env.NODE_ENV} mode on port ${port}`.yellow.bold
+  )
+);
 
 // async function main() {
 //   console.log('Azure Blob storage starting...');
@@ -62,47 +125,3 @@ dotenv.config();
 // main()
 //   .then(() => console.log('Done'))
 //   .catch((ex) => console.log(ex.message));
-
-const port = process.env.PORT || 5000;
-
-const app = express();
-
-// connect to mongoDB
-
-connectDB();
-
-app.use(cors({
-  origin: "*"
-}));
-
-app.use(
-  '/graphql',
-  graphqlHTTP({
-    schema: schema,
-    graphiql: process.env.NODE_ENV === 'development',
-  })
-);
-
-app.use(urlencoded({extended:false}))
-app.use(json())
-
-
-const __dirname = path.resolve();
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/client/build')));
-
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  );
-} else {
-  app.get('/', (req, res) => {
-    res.send('API is running...');
-  });
-}
-
-app.use('/', routes);
-
-
-app.listen(port, console.log(`Server running on port ${port}`));
