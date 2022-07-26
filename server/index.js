@@ -13,10 +13,12 @@ import { v1 as uuidv1 } from 'uuid';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import { protect } from './middleware/authMiddleware.js';
 
 
 // Load .env file content to process.env
 dotenv.config();
+
 
 const port = process.env.PORT || 5000;
 
@@ -32,16 +34,19 @@ app.use(cors({
 
 app.use(
   '/graphql',
+  protect,
   graphqlHTTP({
     schema: schema,
     graphiql: process.env.NODE_ENV === 'development',
-  })
+  }),
+  extensions
+  
 );
 
-app.use(express.urlencoded({extended:true}))
+// app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
-app.use(cookieParser());
+// app.use(cookieParser());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
@@ -63,6 +68,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// Restful APIs
 app.use('/api/checkout', routes);
 
 

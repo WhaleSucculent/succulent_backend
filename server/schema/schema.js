@@ -19,14 +19,22 @@ import Customer from '../models/Customer.js';
 import OrderType from './OrderTypes/OrderType.js';
 import { dateScalar } from './utilScalar.js';
 import { MyDate } from './DataScalar.js';
+import argon2 from 'argon2'
+import jwt from 'jsonwebtoken';
+import { private_key } from '../utils/key.js';
+import generateToken from '../utils/generateToken.js';
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
     products: {
       type: new GraphQLList(ProductType),
-      resolve() {
+      resolve(parent, args, context) {
+        console.log(context)
+        console.log(args)
+        console.log(parent)
         return Product.find();
-      },
+      }
+      
     },
     product: {
       type: ProductType,
@@ -327,8 +335,8 @@ const mutation = new GraphQLObjectType({
         email: { type: GraphQLNonNull(GraphQLString) },
         password: { type: GraphQLNonNull(GraphQLString) },
       },
-      resolve(parent, args) {
-        const hashedPassword = argon2.hash(args.password);
+      async resolve(parent, args) {
+        const hashedPassword = await argon2.hash(args.password);
         const customer = new Customer({
           email: args.email,
           password: hashedPassword,
@@ -343,14 +351,40 @@ const mutation = new GraphQLObjectType({
         email: { type: GraphQLNonNull(GraphQLString) },
         password: { type: GraphQLNonNull(GraphQLString) },
       },
-      resolve(parent, args){
-        const user = Customer.findOne({email: email})
-        
-        if (user && (user.matchPassword)) {
-          
+      async resolve(parent, args) {
+        const customer = await Customer.findOne({ email: args.email })
+        if (!customer) {
+          return {
+            errors: [
+              {
+                field: "usernameOrEmail",
+                message: "that username doesn't exist",
+              },
+            ],
+          };
         }
+
+        const valid = await argon2.verify(customer.password, args.password);
+
+        if (!valid) {
+          return {
+            errors: [
+              {
+                field: "password",
+                message: "incorrect password",
+              },
+            ],
+          };
+        }
+        console.log(customer.id)
+
+        const token = generateToken(customer.id)
+
+        return {token, customer}
       }
     }
+
+
   },
 });
 
