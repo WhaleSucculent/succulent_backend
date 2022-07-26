@@ -52,11 +52,12 @@ const CustomerType = new GraphQLObjectType({
       resolve(parent, args) {
         return parent.orderIds.map((orderId) => Order.findById(orderId));
       },
-      Cart:{
-        type: new GraphQLList(ProductInCartType),
-        resolve(parent,args){
-          return parent.cartIds.map((cardId)=>ProductInCart.findById(cardId));
-        }
+      
+    },
+    cart:{
+      type: new GraphQLList(ProductInCartType),
+      resolve(parent,args){
+        return parent.cartIds.map((cardId)=>ProductInCart.findById(cardId));
       }
     },
   }),
