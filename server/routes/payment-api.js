@@ -4,5 +4,6 @@ import cors from 'cors';
 
 const router  = Router(); 
 router.post('/payment-api', newPay); 
+router.get('/test', (req, res)=> res.json({test: "aa"}))
 
 export default router;
