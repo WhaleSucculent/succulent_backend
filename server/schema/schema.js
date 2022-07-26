@@ -19,6 +19,8 @@ import Customer from '../models/Customer.js';
 import OrderType from './OrderTypes/OrderType.js';
 import { dateScalar } from './utilScalar.js';
 import { MyDate } from './DataScalar.js';
+import ProductInCartType from './OrderTypes/ProductInCartType.js';
+import ProductInCart from '../models/ProductInCart.js';
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -61,6 +63,16 @@ const RootQuery = new GraphQLObjectType({
         return Order.findById(args.id);
       },
     },
+    productsInCart:{
+      type: ProductInCartType,
+      args:{
+        id: {type: GraphQLID},
+
+      },
+      resolve(parent, args){
+        return ProductInCart.findById(args.id);
+      }
+    }
   },
 });
 
