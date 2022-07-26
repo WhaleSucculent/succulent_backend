@@ -24,7 +24,7 @@ import HeaderFooter from "components/HeaderFooter";
 import {ToastContainer} from "react-toastify";
 import"react-toastify/dist/ReactToastify.css";
 
-import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
+import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink, createHttpLink } from "@apollo/client";
 import CheckoutCart from "pages/CheckoutPage/CheckoutCart";
 import NotFound from "components/NotFound";
 import ContactPage from "pages/ContactPage/Contact";
@@ -49,8 +49,13 @@ const cache = new InMemoryCache({
   },
 });
 
+const link = createHttpLink({
+  uri: '/graphql',
+  credentials: 'same-origin'
+});
+
 const client = new ApolloClient({
-  uri: new HttpLink({ uri: "/graphql" }),
+  link,
   cache,
 });
 
