@@ -63,7 +63,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.use('/api/checkout', routes);
+app.use('/api', routes);
 
 
 // when the address don't meet / and /api/products, it will call the app.use(notFound), app.use(notFound) will pass the error to errorHandler
