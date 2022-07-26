@@ -15,7 +15,8 @@ import CreditCard from '../../models/CreditCard.js';
 import Address from '../../models/Address.js';
 import OrderType from '../OrderTypes/OrderType.js';
 import Order from '../../models/Order.js';
-
+import ProductInCart from '../../models/ProductInCart.js';
+import ProductInCartType from '../OrderTypes/ProductInCartType.js';
 const CustomerType = new GraphQLObjectType({
   name: 'Customer',
   fields: () => ({
@@ -50,6 +51,12 @@ const CustomerType = new GraphQLObjectType({
       resolve(parent, args) {
         return parent.orderIds.map((orderId) => Order.findById(orderId));
       },
+      Cart:{
+        type: new GraphQLList(ProductInCartType),
+        resolve(parent,args){
+          return parent.cartIds.map((cardId)=>ProductInCart.findById(cardId));
+        }
+      }
     },
   }),
 });

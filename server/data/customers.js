@@ -17,6 +17,7 @@ const customers = [
     ],
     addressIds: ['62a7c9f910bb9065d6d40c6f', '62a7c9f910bb9065d6d40c6e'],
     orderIds: ['62a981f09416742055244606', '62a981f09416742055244605'],
+    cartIds:['62a95dcb3a42e0dbf9dca0d4', '62a95dcb3a42e0dbf9dca0d3'],
   },
   {
     _id: '62a90f3e88672f1dbd12c32e',
@@ -32,6 +33,7 @@ const customers = [
     creditCardIds: ['62a95376267505c8a74963c2', '62a95376267505c8a74963c3'],
     addressIds: ['62a7c9f910bb9065d6d40c6f', '62a7c9f910bb9065d6d40c6e'],
     orderIds: ['62a981f09416742055244604', '62a981f09416742055244605'],
+    cartIds:['62a95dcb3a42e0dbf9dca0d4', '62a95dcb3a42e0dbf9dca0d3'],
   },
   {
     _id: '62a90f3e88672f1dbd12c32b',
@@ -47,6 +49,7 @@ const customers = [
     creditCardIds: ['62a95376267505c8a74963c3', '62a95376267505c8a74963c4'],
     addressIds: ['62a7c9f910bb9065d6d40c6f', '62a7c9f910bb9065d6d40c6d'],
     orderIds: ['62a981f09416742055244604', '62a981f09416742055244606'],
+    cartIds:['62a95dcb3a42e0dbf9dca0d4', '62a95dcb3a42e0dbf9dca0d3'],
   },
 ];
 
