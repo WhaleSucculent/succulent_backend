@@ -105,7 +105,7 @@ function App() {
               <Route path="order" element={<AdminOrderPage />} />
               <Route path="user" element={<AdminUserPage />} />
             </Route>
-            <Route path="*" element={<NotFound />} />
+            {/* <Route path="*" element={<NotFound />} /> */}
             <Route path="privacy" element={<Privacy />} />
           </Routes>
         </BrowserRouter>
