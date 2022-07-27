@@ -23,6 +23,7 @@ import jwt from 'jsonwebtoken';
 import generateToken from '../utils/generateToken.js';
 import LoginReturnType from './CustomerTypes/LoginReturnType.js';
 import ProductInCartType from './OrderTypes/ProductInCartType.js';
+import argon2 from 'argon2'
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
