@@ -6,12 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server/index.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "nodemon server/index.js",
     "start": "node server/index.js",
-    "data:import": "node server/seeder.js",
-    "azure": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "data:import": "node server/seeder.js"
   },
   "author": "",
   "license": "ISC",

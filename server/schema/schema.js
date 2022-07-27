@@ -21,8 +21,8 @@ import { dateScalar } from './utilScalar.js';
 import { MyDate } from './DataScalar.js';
 import argon2 from 'argon2'
 import jwt from 'jsonwebtoken';
-import { private_key } from '../utils/key.js';
 import generateToken from '../utils/generateToken.js';
+import LoginReturnType from './CustomerTypes/LoginReturnType.js';
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -346,7 +346,7 @@ const mutation = new GraphQLObjectType({
     },
 
     loginCustomer: {
-      type: CustomerType,
+      type: LoginReturnType,
       args: {
         email: { type: GraphQLNonNull(GraphQLString) },
         password: { type: GraphQLNonNull(GraphQLString) },
@@ -380,7 +380,7 @@ const mutation = new GraphQLObjectType({
 
         const token = generateToken(customer.id)
 
-        return {token, customer}
+        return {token, userId: customer.id}
       }
     }
 
