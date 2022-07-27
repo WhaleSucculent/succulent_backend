@@ -25,6 +25,7 @@ import LoginReturnType from './CustomerTypes/LoginReturnType.js';
 import ProductInCartType from './OrderTypes/ProductInCartType.js';
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
+  fields: {
     products: {
       type: new GraphQLList(ProductType),
       resolve(parent, args, context) {
