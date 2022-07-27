@@ -13,6 +13,7 @@ const CustomerSchema = new mongoose.Schema({
   creditCardIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CreditCard' }],
   addressIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
   orderIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
+  cartIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ProductInCart' }],
 });
 
 
