@@ -27,12 +27,15 @@ import argon2 from 'argon2'
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
+    
     products: {
       type: new GraphQLList(ProductType),
       resolve(parent, args, context) {
+
         console.log(context)
         console.log(args)
         console.log(parent)
+        
         return Product.find();
       }
       
@@ -46,7 +49,8 @@ const RootQuery = new GraphQLObjectType({
     },
     customers: {
       type: new GraphQLList(CustomerType),
-      resolve() {
+      resolve(parent, args, context) {
+        if (!context.customer || !(context.customer.role==='admin')) return null;
         return Customer.find();
       },
     },
@@ -59,7 +63,8 @@ const RootQuery = new GraphQLObjectType({
     },
     orders: {
       type: new GraphQLList(OrderType),
-      resolve() {
+      resolve(parent, args, context) {
+        if (!context.customer || !(context.customer.role === 'admin')) return null;
         return Order.find();
       },
     },
@@ -186,7 +191,8 @@ const mutation = new GraphQLObjectType({
         stock: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
         imageIds: { type: GraphQLNonNull(GraphQLList(GraphQLID)) }
       },
-      resolve(parent, args) {
+      resolve(parent, args, context) {
+        if (!context.customer || !(context.customer.role === 'admin')) return null;
         const product = new Product({
           name: args.name,
           postDate: args.postDate,
@@ -222,7 +228,8 @@ const mutation = new GraphQLObjectType({
         imageIds: { type: GraphQLList(GraphQLID) },
 
       },
-      resolve(parent, args) {
+      resolve(parent, args, context) {
+        if (!context.customer || !(context.customer.role === 'admin')) return null;
         return Product.findByIdAndUpdate(args.id,
           {
             $set: {
@@ -297,7 +304,8 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
-      resolve(parent, args) {
+      resolve(parent, args, context) {
+        if (!context.customer || (context.customer.role === 'admin')) return null;
         return Customer.findByIdAndRemove(args.id);
       }
     },
@@ -341,7 +349,7 @@ const mutation = new GraphQLObjectType({
 
     //Register a new Customer
     registerCustomer: {
-      type: CustomerType,
+      type: LoginReturnType,
       args: {
         email: { type: GraphQLNonNull(GraphQLString) },
         password: { type: GraphQLNonNull(GraphQLString) },
@@ -352,7 +360,8 @@ const mutation = new GraphQLObjectType({
           email: args.email,
           password: hashedPassword,
         });
-        return customer.save();
+        const token = generateToken(customer.id)
+        return {token, userId: customer.id}
       }
     },
 

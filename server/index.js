@@ -35,6 +35,7 @@ app.use(cors({
 // TODO need switch graphiql to process.env.NODE_ENV === 'development'
 app.use(
   '/graphql',
+  protect,
   graphqlHTTP({
     schema: schema,
     graphiql: true ,
