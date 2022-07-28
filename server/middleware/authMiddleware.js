@@ -13,7 +13,7 @@ const protect = asyncHandler(async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       // select except password
-      req.customer = await Customer.findById("62e16a33d4e65354d17d900a").select('-password');
+      req.customer = await Customer.findById(decoded.id).select('-password');
       next();
     } catch (error) {
       console.error(error);
@@ -21,8 +21,8 @@ const protect = asyncHandler(async (req, res, next) => {
       throw new Error('Not authorized, no token');
     }
   }
-  req.customer = await Customer.findById("62e16a33d4e65354d17d900a").select('-password');
-  next()
+
+  next();
 });
 
 // @desc Middleware for checking if customer is admin
