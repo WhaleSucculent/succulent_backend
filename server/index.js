@@ -7,11 +7,9 @@ import cors from 'cors';
 import schema from './schema/schema.js';
 import routes from '../server/routes/payment-api.js';
 import morgan from 'morgan'
-import { join } from 'path';
 import { BlobServiceClient } from '@azure/storage-blob';
 import { v1 as uuidv1 } from 'uuid';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
-import cookieParser from 'cookie-parser';
 import path from 'path';
 import { protect } from './middleware/authMiddleware.js';
 
@@ -31,6 +29,8 @@ connectDB();
 app.use(cors({
   origin: "*"
 }));
+// app.use(express.urlencoded({extended:true}))
+app.use(express.json())
 
 // TODO need switch graphiql to process.env.NODE_ENV === 'development'
 app.use(
@@ -39,11 +39,10 @@ app.use(
   graphqlHTTP({
     schema: schema,
     graphiql: true ,
-  })  
+  })
 );
 
-// app.use(express.urlencoded({extended:true}))
-app.use(express.json())
+
 
 // app.use(cookieParser());
 if (process.env.NODE_ENV === 'development') {

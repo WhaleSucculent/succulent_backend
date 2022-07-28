@@ -20,9 +20,9 @@ const protect = asyncHandler(async (req, res, next) => {
       res.status(401);
       throw new Error('Not authorized, no token');
     }
+  } else {
+    next()
   }
-
-  next();
 });
 
 // @desc Middleware for checking if customer is admin

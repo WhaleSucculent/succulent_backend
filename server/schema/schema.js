@@ -31,11 +31,6 @@ const RootQuery = new GraphQLObjectType({
     products: {
       type: new GraphQLList(ProductType),
       resolve(parent, args, context) {
-
-        console.log(context)
-        console.log(args)
-        console.log(parent)
-        
         return Product.find();
       }
       
