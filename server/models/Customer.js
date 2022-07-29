@@ -14,6 +14,8 @@ const CustomerSchema = new mongoose.Schema({
   addressIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
   orderIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
   cartIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ProductInCart' }],
+  resetToken: { type: String },
+  resetTokenExpiry: { type: Date },
 });
 
 

@@ -24,16 +24,19 @@ import generateToken from '../utils/generateToken.js';
 import LoginReturnType from './CustomerTypes/LoginReturnType.js';
 import ProductInCartType from './OrderTypes/ProductInCartType.js';
 import argon2 from 'argon2'
+import RequestReturnType from './CustomerTypes/RequestReturnType.js';
+import { resetMailOptions, transporter, resetToken, resetTokenExpiry } from '../utils/mailSetup.js';
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    
+
     products: {
       type: new GraphQLList(ProductType),
       resolve(parent, args, context) {
         return Product.find();
       }
-      
+
     },
     product: {
       type: ProductType,
@@ -45,7 +48,7 @@ const RootQuery = new GraphQLObjectType({
     customers: {
       type: new GraphQLList(CustomerType),
       resolve(parent, args, context) {
-        if (!context.customer || !(context.customer.role==='admin')) return null;
+        if (!context.customer || !(context.customer.role === 'admin')) return null;
         return Customer.find();
       },
     },
@@ -70,13 +73,13 @@ const RootQuery = new GraphQLObjectType({
         return Order.findById(args.id);
       },
     },
-    productsInCart:{
+    productsInCart: {
       type: ProductInCartType,
-      args:{
-        id: {type: GraphQLID},
+      args: {
+        id: { type: GraphQLID },
 
       },
-      resolve(parent, args){
+      resolve(parent, args) {
         return ProductInCart.findById(args.id);
       }
     }
@@ -346,6 +349,8 @@ const mutation = new GraphQLObjectType({
     registerCustomer: {
       type: LoginReturnType,
       args: {
+        firstName: { type: GraphQLNonNull(GraphQLString) },
+        lastName: { type: GraphQLNonNull(GraphQLString) },
         email: { type: GraphQLNonNull(GraphQLString) },
         password: { type: GraphQLNonNull(GraphQLString) },
       },
@@ -354,9 +359,12 @@ const mutation = new GraphQLObjectType({
         const customer = new Customer({
           email: args.email,
           password: hashedPassword,
+          firstName: args.firstName,
+          lastName: args.lastName,
         });
         const token = generateToken(customer.id)
-        return {token, userId: customer.id}
+        customer.save();
+        return { token, userId: customer.id }
       }
     },
 
@@ -395,12 +403,96 @@ const mutation = new GraphQLObjectType({
 
         const token = generateToken(customer.id)
 
-        return {token, userId: customer.id}
+        return { token, userId: customer.id }
       }
-    }
+    },
+
+    requestReset: {
+      type: RequestReturnType,
+      args: {
+        email: { type: GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, args) {
+        const customer = await Customer.findOne({ email: args.email })
+        if (!customer) {
+          return {
+            errors: [
+              {
+                field: "usernameOrEmail",
+                message: "that username doesn't exist",
+              },
+            ],
+          };
+        }
 
 
-  },
+        const result = await Customer.findOneAndUpdate(
+          { email: args.email },
+          {
+            resetToken,
+            resetTokenExpiry,
+          }
+        );
+
+        if (!result) {
+          return {
+            errors: [
+              {
+                field: "email",
+                message: "cannot find a customer with that email",
+              },
+            ],
+          };
+        }
+
+        try {
+          await transporter.sendMail({...resetMailOptions, to: args.email});
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+        return { result: true };
+      }
+    },
+
+    resetPassword: {
+      type: RequestReturnType,
+      args: {
+        token: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, args) {
+        const payload = verifyToken(args.token)
+        if (!payload) {
+          return {
+            errors: [
+              {
+                field: "token",
+                message: "that token is invalid",
+              },
+            ],
+          };
+        }
+        const customer = await Customer.findById(payload.id)
+        if (!customer) {
+          return {
+            errors: [
+              {
+                field: "token",
+                message: "that token is invalid",
+              },
+            ],
+          };
+        }
+
+        const hashedPassword = await argon2.hash(args.password);
+        customer.password = hashedPassword
+        await customer.save()
+        return {result: true};
+      }
+    },
+
+  }
 });
 
 const schema = new GraphQLSchema({
