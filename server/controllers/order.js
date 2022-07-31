@@ -11,13 +11,17 @@ import Order from '../models/Order.js';
   export const createNewOrder = async(req, res) => {
     const data = new Order({
       customerId: req.body.customerId,
+      customerEmail: req.body.customerEmail,
       shippingAddressId: req.body.shippingAddressId,
       billingAddressId: req.body.billingAddressId,
       orderDate: req.body.orderDate,
       orderStatus: req.body.orderStatus,
       productsInCartIds: req.body.productsInCartIds,
       deliveryId: req.body.deliveryId,
-      paymentId: req.body.paymentId
+      paymentId: req.body.paymentId,
+      itemAmount: req.body.itemAmount,
+      totalTax: req.body.totalTax,
+      totalAmount: req.body.totalAmount
     })
 
     try {
