@@ -8,6 +8,7 @@ import {
   GraphQLID,
   GraphQLEnumType,
   GraphQLBoolean,
+  GraphQLFloat,
 } from 'graphql';
 import Product from '../models/Product.js';
 import Address from '../models/Address.js';
@@ -59,6 +60,13 @@ const RootQuery = new GraphQLObjectType({
         return Customer.findById(args.id);
       },
     },
+    me: {
+      type:CustomerType,
+      resolve(parent, args, context) {
+        if (!context.customer) return null;
+        return Customer.findById(context.customer.id);
+      }
+    },
     orders: {
       type: new GraphQLList(OrderType),
       resolve(parent, args, context) {
@@ -97,6 +105,7 @@ const mutation = new GraphQLObjectType({
         customerId: { type: GraphQLNonNull(GraphQLID) },
         shippingAddressId: { type: GraphQLNonNull(GraphQLID) },
         billingAddressId: { type: GraphQLNonNull(GraphQLID) },
+        customerEmail: {type: GraphQLString},
         // orderDate: { type: GraphQLString},
         orderStatus: {
           type: new GraphQLEnumType({
@@ -111,18 +120,25 @@ const mutation = new GraphQLObjectType({
         },
         productsInCartId: { type: GraphQLList(GraphQLID) },
         deliveryId: { type: GraphQLNonNull(GraphQLID) },
-        paymentId: { type: GraphQLNonNull(GraphQLID) },
+        paymentId: { type: GraphQLID },
+        itemAmount: { type: GraphQLFloat },
+        totalTax: { type: GraphQLFloat },
+        totalAmount: { type: GraphQLFloat},
       },
       resolve(parent, args) {
         const order = new Order({
           customerId: args.customerId,
           shippingAddressId: args.shippingAddressId,
           billingAddressId: args.billingAddressId,
+          customerEmail: args.customerEmail,
           orderDate: args.orderDate,
           orderStatus: args.orderStatus,
           productsInCartId: args.productsInCartId,
           deliveryId: args.deliveryId,
           paymentId: args.paymentId,
+          itemAmount: args.itemAmount,
+          totalTax: args.totalTax,
+          totalAmount: args.totalAmount,
         });
         console.log('Order added');
         return order.save();
@@ -345,7 +361,7 @@ const mutation = new GraphQLObjectType({
       }
     },
 
-    //Register a new Customer
+    //Register a new Customer, the role is set to customer by default
     registerCustomer: {
       type: LoginReturnType,
       args: {
@@ -361,6 +377,7 @@ const mutation = new GraphQLObjectType({
           password: hashedPassword,
           firstName: args.firstName,
           lastName: args.lastName,
+          role: 'customer',
         });
         const token = generateToken(customer.id)
         customer.save();

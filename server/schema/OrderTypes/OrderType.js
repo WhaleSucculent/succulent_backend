@@ -5,6 +5,7 @@ import {
   GraphQLInt,
   GraphQLList,
   GraphQLScalarType,
+  GraphQLFloat,
 } from 'graphql';
 
 import Address from '../../models/Address.js';
@@ -30,6 +31,7 @@ const OrderType = new GraphQLObjectType({
         return Customer.findById(parent.customerId);
       },
     },
+    customerEmail: { type: GraphQLString},
     shippingAddress: {
       type: AddressType,
       resolve(parent, args) {
@@ -65,6 +67,9 @@ const OrderType = new GraphQLObjectType({
         return Payment.findById(parent.paymentId);
       },
     },
+    itemAmount: { type: GraphQLFloat },
+    totalTax: { type: GraphQLFloat },
+    totalAmount: { type: GraphQLFloat },
   }),
 });
 
