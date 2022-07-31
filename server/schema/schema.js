@@ -59,6 +59,13 @@ const RootQuery = new GraphQLObjectType({
         return Customer.findById(args.id);
       },
     },
+    me: {
+      type:CustomerType,
+      resolve(parent, args, context) {
+        if (!context.customer) return null;
+        return Customer.findById(context.customer.id);
+      }
+    },
     orders: {
       type: new GraphQLList(OrderType),
       resolve(parent, args, context) {
