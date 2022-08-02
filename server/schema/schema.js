@@ -163,7 +163,8 @@ const mutation = new GraphQLObjectType({
         id: {type: GraphQLNonNull(GraphQLID)},
         orderStatus: {type: GraphQLString},
       },
-      resolve(parent, args){
+      resolve(parent, args, context){
+        if(!context.customer || !(context.customer.role === 'admin')) return null;
         return Order.findByIdAndUpdate(args.id,{
           $set:{
             orderStatus: args.orderStatus,
