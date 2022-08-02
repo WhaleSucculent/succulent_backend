@@ -377,7 +377,7 @@ const mutation = new GraphQLObjectType({
           password: hashedPassword,
           firstName: args.firstName,
           lastName: args.lastName,
-          role: 'customer',
+          role: 'user',
         });
         const token = generateToken(customer.id)
         customer.save();
