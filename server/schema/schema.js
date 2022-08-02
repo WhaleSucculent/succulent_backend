@@ -155,6 +155,25 @@ const mutation = new GraphQLObjectType({
         return Order.findByIdAndRemove(args.id);
       },
     },
+
+    //Update the Order
+    updateOrder:{
+      type: OrderType,
+      args:{
+        id: {type: GraphQLNonNull(GraphQLID)},
+        orderStatus: {type: GraphQLString},
+      },
+      resolve(parent, args){
+        return Order.findByIdAndUpdate(args.id,{
+          $set:{
+            orderStatus: args.orderStatus,
+          },
+        },
+        {new: true}
+                );
+      }
+    },
+
     // Add an address
     addAddress: {
       type: AddressType,
