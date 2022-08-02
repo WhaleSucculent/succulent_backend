@@ -319,7 +319,7 @@ const mutation = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
       resolve(parent, args, context) {
-        if (!context.customer || (context.customer.role === 'admin')) return null;
+        if (!context.customer || !(context.customer.role === 'admin')) return null;
         return Customer.findByIdAndRemove(args.id);
       }
     },
