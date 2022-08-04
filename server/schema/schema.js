@@ -61,7 +61,7 @@ const RootQuery = new GraphQLObjectType({
       },
     },
     me: {
-      type:CustomerType,
+      type: CustomerType,
       resolve(parent, args, context) {
         if (!context.customer) return null;
         return Customer.findById(context.customer.id);
@@ -105,7 +105,7 @@ const mutation = new GraphQLObjectType({
         customerId: { type: GraphQLNonNull(GraphQLID) },
         shippingAddressId: { type: GraphQLNonNull(GraphQLID) },
         billingAddressId: { type: GraphQLNonNull(GraphQLID) },
-        customerEmail: {type: GraphQLString},
+        customerEmail: { type: GraphQLString },
         // orderDate: { type: GraphQLString},
         orderStatus: {
           type: new GraphQLEnumType({
@@ -123,7 +123,7 @@ const mutation = new GraphQLObjectType({
         paymentId: { type: GraphQLID },
         itemAmount: { type: GraphQLFloat },
         totalTax: { type: GraphQLFloat },
-        totalAmount: { type: GraphQLFloat},
+        totalAmount: { type: GraphQLFloat },
       },
       resolve(parent, args) {
         const order = new Order({
@@ -424,6 +424,7 @@ const mutation = new GraphQLObjectType({
       }
     },
 
+
     requestReset: {
       type: RequestReturnType,
       args: {
@@ -463,7 +464,16 @@ const mutation = new GraphQLObjectType({
         }
 
         try {
-          await transporter.sendMail({...resetMailOptions, to: args.email});
+          await transporter.sendMail({
+            from: process.env.EMAIL_ACCOUNT,
+            to: args.email,
+            subject: "Password Reset",
+            text: `Hello, ${result.firstName}! \n
+          You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
+          Please click on the following link, or paste this into your browser to complete the process:\n\n
+          http://succulentbackend.azurewebsites.net/reset/${resetToken}&uuid=${result.id}\n\n
+          If you did not request this, please ignore this email and your password will remain unchanged.\n` 
+          });
         } catch (error) {
           console.log(error);
           return false;
@@ -479,8 +489,9 @@ const mutation = new GraphQLObjectType({
         password: { type: GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, args) {
-        const payload = verifyToken(args.token)
-        if (!payload) {
+        const [token, uuid] = args.token.split('&uuid=')
+        const customer = await Customer.findById(uuid)
+        if (token !== customer.resetToken || !customer) {
           return {
             errors: [
               {
@@ -490,22 +501,24 @@ const mutation = new GraphQLObjectType({
             ],
           };
         }
-        const customer = await Customer.findById(payload.id)
-        if (!customer) {
-          return {
-            errors: [
-              {
-                field: "token",
-                message: "that token is invalid",
-              },
-            ],
-          };
-        }
+        // TODO: check if token is expired
+        // if (Date.now() > customer.resetTokenExpiry) {
+        //   return {
+        //     errors: [
+        //       {
+        //         field: "token",
+        //         message: "that token has expired",
+        //       },
+        //     ],
+        //   };
+        // }
 
         const hashedPassword = await argon2.hash(args.password);
         customer.password = hashedPassword
+        customer.resetToken = null
+        customer.resetTokenExpiry = null
         await customer.save()
-        return {result: true};
+        return { result: true };
       }
     },
 
