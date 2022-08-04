@@ -20,6 +20,7 @@ const ProductSchema = new mongoose.Schema(
         postDate: { type: Date },
       },
     ],
+    quantity: { type: Number },
     colors: [{ type: String }],
     reviewIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     stockIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stock' }],

@@ -9,6 +9,7 @@ import {
   GraphQLEnumType,
   GraphQLBoolean,
   GraphQLFloat,
+  GraphQLInt,
 } from 'graphql';
 import Product from '../models/Product.js';
 import Address from '../models/Address.js';
@@ -220,8 +221,8 @@ const mutation = new GraphQLObjectType({
         rare: { type: GraphQLNonNull(GraphQLBoolean) },
         description: { type: GraphQLNonNull(GraphQLString) },
         productStatus: { type: GraphQLNonNull(GraphQLString) },
-
-        review: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
+        quantity: { type: GraphQLNonNull(GraphQLInt) },
+        review: { type: GraphQLList(GraphQLString) },
         stock: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
         imageIds: { type: GraphQLNonNull(GraphQLList(GraphQLID)) }
       },
@@ -232,6 +233,7 @@ const mutation = new GraphQLObjectType({
           postDate: args.postDate,
           priceLists: args.priceList,
           size: args.size,
+          quantity: args.quantity,
           colors: args.colors,
           category: args.category,
           rare: args.rare,
