@@ -9,6 +9,7 @@ import {
   GraphQLEnumType,
   GraphQLBoolean,
   GraphQLFloat,
+  GraphQLInt,
 } from 'graphql';
 import Product from '../models/Product.js';
 import Address from '../models/Address.js';
@@ -155,6 +156,26 @@ const mutation = new GraphQLObjectType({
         return Order.findByIdAndRemove(args.id);
       },
     },
+
+    //Update the Order
+    updateOrder:{
+      type: OrderType,
+      args:{
+        id: {type: GraphQLNonNull(GraphQLID)},
+        orderStatus: {type: GraphQLString},
+      },
+      resolve(parent, args, context){
+        if(!context.customer || !(context.customer.role === 'admin')) return null;
+        return Order.findByIdAndUpdate(args.id,{
+          $set:{
+            orderStatus: args.orderStatus,
+          },
+        },
+        {new: true}
+                );
+      }
+    },
+
     // Add an address
     addAddress: {
       type: AddressType,
@@ -200,9 +221,9 @@ const mutation = new GraphQLObjectType({
         rare: { type: GraphQLNonNull(GraphQLBoolean) },
         description: { type: GraphQLNonNull(GraphQLString) },
         productStatus: { type: GraphQLNonNull(GraphQLString) },
-
-        review: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
-        stock: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
+        quantity: { type: GraphQLNonNull(GraphQLInt) },
+        review: { type: GraphQLList(GraphQLString) },
+        stock: { type: GraphQLList(GraphQLString) },
         imageIds: { type: GraphQLNonNull(GraphQLList(GraphQLID)) }
       },
       resolve(parent, args, context) {
@@ -212,6 +233,7 @@ const mutation = new GraphQLObjectType({
           postDate: args.postDate,
           priceLists: args.priceList,
           size: args.size,
+          quantity: args.quantity,
           colors: args.colors,
           category: args.category,
           rare: args.rare,
@@ -319,7 +341,7 @@ const mutation = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
       resolve(parent, args, context) {
-        if (!context.customer || (context.customer.role === 'admin')) return null;
+        if (!context.customer || !(context.customer.role === 'admin')) return null;
         return Customer.findByIdAndRemove(args.id);
       }
     },

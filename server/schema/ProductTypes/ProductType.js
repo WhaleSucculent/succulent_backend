@@ -89,6 +89,7 @@ const ProductType = new GraphQLObjectType({
         return parent.size;
       },
     },
+    quantity: { type: GraphQLInt },
     // images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     colors: {
       type: new GraphQLList(GraphQLString),
