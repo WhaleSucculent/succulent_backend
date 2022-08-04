@@ -451,7 +451,7 @@ const mutation = new GraphQLObjectType({
     loginWithGoogle: {
       type: LoginReturnType,
       args: {
-        token: { type: GraphQLNonNull(GraphQLString) },
+        idToken: { type: GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, args) {
         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -459,7 +459,7 @@ const mutation = new GraphQLObjectType({
         let token
         let userId
         await client.verifyIdToken({
-          idToken: args.token,
+          idToken: args.idToken,
           audience: process.env.GOOGLE_CLIENT_ID,
         }).then( async (response) => {
           console.log(response)
