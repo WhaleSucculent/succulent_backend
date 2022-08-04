@@ -223,7 +223,7 @@ const mutation = new GraphQLObjectType({
         productStatus: { type: GraphQLNonNull(GraphQLString) },
         quantity: { type: GraphQLNonNull(GraphQLInt) },
         review: { type: GraphQLList(GraphQLString) },
-        stock: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
+        stock: { type: GraphQLList(GraphQLString) },
         imageIds: { type: GraphQLNonNull(GraphQLList(GraphQLID)) }
       },
       resolve(parent, args, context) {
