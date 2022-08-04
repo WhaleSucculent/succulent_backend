@@ -8,7 +8,7 @@ const ProductInCartSchema = new mongoose.Schema({
     ref: 'Product',
   },
   price: { type: Number, required: true },
-});
+}, { timestamps: true });
 
 const ProductInCart = mongoose.model('ProductInCart', ProductInCartSchema);
 export default ProductInCart;

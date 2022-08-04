@@ -27,7 +27,8 @@ import LoginReturnType from './CustomerTypes/LoginReturnType.js';
 import ProductInCartType from './OrderTypes/ProductInCartType.js';
 import argon2 from 'argon2'
 import RequestReturnType from './CustomerTypes/RequestReturnType.js';
-import { resetMailOptions, transporter, resetToken, resetTokenExpiry } from '../utils/mailSetup.js';
+import { resetMailOptions, transporter, resetToken, resetTokenExpiry, randomBytesPromisified } from '../utils/mailSetup.js';
+import { OAuth2Client } from 'google-auth-library';
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -158,21 +159,21 @@ const mutation = new GraphQLObjectType({
     },
 
     //Update the Order
-    updateOrder:{
+    updateOrder: {
       type: OrderType,
-      args:{
-        id: {type: GraphQLNonNull(GraphQLID)},
-        orderStatus: {type: GraphQLString},
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        orderStatus: { type: GraphQLString },
       },
-      resolve(parent, args, context){
-        if(!context.customer || !(context.customer.role === 'admin')) return null;
-        return Order.findByIdAndUpdate(args.id,{
-          $set:{
+      resolve(parent, args, context) {
+        if (!context.customer || !(context.customer.role === 'admin')) return null;
+        return Order.findByIdAndUpdate(args.id, {
+          $set: {
             orderStatus: args.orderStatus,
           },
         },
-        {new: true}
-                );
+          { new: true }
+        );
       }
     },
 
@@ -214,7 +215,7 @@ const mutation = new GraphQLObjectType({
         name: { type: GraphQLNonNull(GraphQLString) },
         priceList: { type: GraphQLList(PriceListTypeInput) },
         postDate: { type: GraphQLString },
-        size: { type: SizeTypeInput},
+        size: { type: SizeTypeInput },
         // size:{type: SizeType)},
         colors: { type: GraphQLList(GraphQLString) },
         category: { type: GraphQLString },
@@ -225,7 +226,7 @@ const mutation = new GraphQLObjectType({
         review: { type: GraphQLList(GraphQLString) },
         stock: { type: GraphQLList(GraphQLString) },
         imageIds: { type: GraphQLList(GraphQLID) }
-     },
+      },
       resolve(parent, args, context) {
         if (!context.customer || !(context.customer.role === 'admin')) return null;
         const product = new Product({
@@ -442,11 +443,61 @@ const mutation = new GraphQLObjectType({
 
         const token = generateToken(customer.id)
 
-        return { token, userId: customer.id }
+        return { token: token, userId: customer.id }
+      }
+    },
+
+    // login with google account
+    loginWithGoogle: {
+      type: LoginReturnType,
+      args: {
+        token: { type: GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, args) {
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        // can't return the token in then, so put token and userId in a variable and return it in the end
+        let token
+        let userId
+        await client.verifyIdToken({
+          idToken: args.token,
+          audience: process.env.GOOGLE_CLIENT_ID,
+        }).then( async (response) => {
+          console.log(response)
+          const payload = response.getPayload();
+          console.log(payload)
+          const googleId = payload['sub'];
+          const firstName = payload['given_name'];
+          const lastName = payload['family_name'];
+          const email = payload['email'];
+          const avatar = payload['picture'];
+          const role = 'user';
+          // TODO replace the password with a random string
+          const password = (await randomBytesPromisified(20)).toString("hex");
+          const hashedPassword = await argon2.hash(password);
+          const customer = new Customer({
+            email: email,
+            password: hashedPassword,
+            firstName: firstName,
+            lastName: lastName,
+            role: role,
+            googleId: googleId,
+            avatar: avatar,
+          });
+          token = generateToken(customer.id)
+          userId = customer.id
+          customer.save();
+
+          console.log(token, customer.id)
+        }).catch(err => {
+          console.log(err)
+        })
+        return { token, userId }
+
       }
     },
 
 
+    // request reset password url and send email to the user with the reset password url
     requestReset: {
       type: RequestReturnType,
       args: {
@@ -494,7 +545,7 @@ const mutation = new GraphQLObjectType({
           You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
           Please click on the following link, or paste this into your browser to complete the process:\n\n
           http://succulentbackend.azurewebsites.net/reset/${resetToken}&uuid=${result.id}\n\n
-          If you did not request this, please ignore this email and your password will remain unchanged.\n` 
+          If you did not request this, please ignore this email and your password will remain unchanged.\n`
           });
         } catch (error) {
           console.log(error);
@@ -504,6 +555,7 @@ const mutation = new GraphQLObjectType({
       }
     },
 
+    // reset password with the reset token and the new password
     resetPassword: {
       type: RequestReturnType,
       args: {
@@ -545,7 +597,8 @@ const mutation = new GraphQLObjectType({
     },
 
   }
-});
+}
+)
 
 const schema = new GraphQLSchema({
   query: RootQuery,

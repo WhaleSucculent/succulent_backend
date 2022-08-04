@@ -24,6 +24,7 @@
     "express": "^4.18.1",
     "express-async-handler": "^1.2.0",
     "express-graphql": "^0.12.0",
+    "google-auth-library": "^8.1.1",
     "graphql": "^15.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.6",

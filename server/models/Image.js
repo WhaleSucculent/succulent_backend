@@ -8,7 +8,7 @@ const ImageSchema = new mongoose.Schema({
   size: { type: Number },
   format: { type: String },
   imageLink: { type: String },
-});
+}, { timestamps: true });
 
 const Image = mongoose.model('Image', ImageSchema);
 export default Image;
