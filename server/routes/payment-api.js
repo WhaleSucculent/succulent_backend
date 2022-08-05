@@ -4,6 +4,7 @@ import { createNewDelivery, deleteOneDelivery } from '../controllers/delivery.js
 import { createNewAddress, deleteOneAddress } from '../controllers/address.js';
 import { createNewPayment, deleteOnePayment } from '../controllers/payment.js';
 import { createNewOrder, deleteOneOrder } from '../controllers/order.js';
+import { insertOrder } from '../controllers/insertOrder.js';
 
 const router  = Router(); 
 
@@ -16,6 +17,7 @@ router.post('/createNewPayment', createNewPayment);
 router.delete('/deleteOnePayment/:id', deleteOnePayment);
 router.post('/createNewOrder', createNewOrder);
 router.delete('/deleteOneOrder/:id', deleteOneOrder);
+router.post('/insertOrder', insertOrder);
 
 router.get('/test', (req, res)=> res.json({test: "aa"}));
 
