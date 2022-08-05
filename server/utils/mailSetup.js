@@ -25,4 +25,4 @@ const resetMailOptions = {
           If you did not request this, please ignore this email and your password will remain unchanged.\n`
 }
 
-export { transporter, resetMailOptions, resetToken, resetTokenExpiry }
+export { transporter, resetMailOptions, resetToken, resetTokenExpiry, randomBytesPromisified }

@@ -9,6 +9,7 @@ import {
   GraphQLEnumType,
   GraphQLBoolean,
   GraphQLFloat,
+  GraphQLInt,
 } from 'graphql';
 import Product from '../models/Product.js';
 import Address from '../models/Address.js';
@@ -26,7 +27,8 @@ import LoginReturnType from './CustomerTypes/LoginReturnType.js';
 import ProductInCartType from './OrderTypes/ProductInCartType.js';
 import argon2 from 'argon2'
 import RequestReturnType from './CustomerTypes/RequestReturnType.js';
-import { resetMailOptions, transporter, resetToken, resetTokenExpiry } from '../utils/mailSetup.js';
+import { resetMailOptions, transporter, resetToken, resetTokenExpiry, randomBytesPromisified } from '../utils/mailSetup.js';
+import { OAuth2Client } from 'google-auth-library';
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -61,7 +63,7 @@ const RootQuery = new GraphQLObjectType({
       },
     },
     me: {
-      type:CustomerType,
+      type: CustomerType,
       resolve(parent, args, context) {
         if (!context.customer) return null;
         return Customer.findById(context.customer.id);
@@ -102,10 +104,10 @@ const mutation = new GraphQLObjectType({
     addOrder: {
       type: OrderType,
       args: {
-        customerId: { type: GraphQLNonNull(GraphQLID) },
-        shippingAddressId: { type: GraphQLNonNull(GraphQLID) },
-        billingAddressId: { type: GraphQLNonNull(GraphQLID) },
-        customerEmail: {type: GraphQLString},
+        customerId: { type: GraphQLID },
+        shippingAddressId: { type: GraphQLID },
+        billingAddressId: { type: GraphQLID },
+        customerEmail: { type: GraphQLString },
         // orderDate: { type: GraphQLString},
         orderStatus: {
           type: new GraphQLEnumType({
@@ -119,11 +121,11 @@ const mutation = new GraphQLObjectType({
           defaultValue: 'unpaid',
         },
         productsInCartId: { type: GraphQLList(GraphQLID) },
-        deliveryId: { type: GraphQLNonNull(GraphQLID) },
+        deliveryId: { type: GraphQLID },
         paymentId: { type: GraphQLID },
         itemAmount: { type: GraphQLFloat },
         totalTax: { type: GraphQLFloat },
-        totalAmount: { type: GraphQLFloat},
+        totalAmount: { type: GraphQLFloat },
       },
       resolve(parent, args) {
         const order = new Order({
@@ -155,19 +157,39 @@ const mutation = new GraphQLObjectType({
         return Order.findByIdAndRemove(args.id);
       },
     },
+
+    //Update the Order
+    updateOrder: {
+      type: OrderType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        orderStatus: { type: GraphQLString },
+      },
+      resolve(parent, args, context) {
+        if (!context.customer || !(context.customer.role === 'admin')) return null;
+        return Order.findByIdAndUpdate(args.id, {
+          $set: {
+            orderStatus: args.orderStatus,
+          },
+        },
+          { new: true }
+        );
+      }
+    },
+
     // Add an address
     addAddress: {
       type: AddressType,
       args: {
         firstName: { type: GraphQLNonNull(GraphQLString) },
         lastName: { type: GraphQLNonNull(GraphQLString) },
-        address: { type: GraphQLNonNull(GraphQLString) },
-        apartment: { type: GraphQLNonNull(GraphQLString) },
-        city: { type: GraphQLNonNull(GraphQLString) },
-        country: { type: GraphQLNonNull(GraphQLString) },
-        state: { type: GraphQLNonNull(GraphQLString) },
-        zipcode: { type: GraphQLNonNull(GraphQLString) },
-        phone1: { type: GraphQLNonNull(GraphQLString) },
+        address: { type: GraphQLString },
+        apartment: { type: GraphQLString },
+        city: { type: GraphQLString },
+        country: { type: GraphQLString },
+        state: { type: GraphQLString },
+        zipcode: { type: GraphQLString },
+        phone1: { type: GraphQLString },
         phone2: { type: GraphQLString },
       },
       resolve(parent, args) {
@@ -191,19 +213,19 @@ const mutation = new GraphQLObjectType({
       type: ProductType,
       args: {
         name: { type: GraphQLNonNull(GraphQLString) },
-        priceList: { type: GraphQLNonNull(GraphQLList(PriceListTypeInput)) },
-        postDate: { type: GraphQLNonNull(GraphQLString) },
-        size: { type: GraphQLNonNull(SizeTypeInput) },
-        // size:{type: GraphQLNonNull(SizeType)},
-        colors: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
-        category: { type: GraphQLNonNull(GraphQLString) },
-        rare: { type: GraphQLNonNull(GraphQLBoolean) },
-        description: { type: GraphQLNonNull(GraphQLString) },
-        productStatus: { type: GraphQLNonNull(GraphQLString) },
-
-        review: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
-        stock: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
-        imageIds: { type: GraphQLNonNull(GraphQLList(GraphQLID)) }
+        priceList: { type: GraphQLList(PriceListTypeInput) },
+        postDate: { type: GraphQLString },
+        size: { type: SizeTypeInput },
+        // size:{type: SizeType)},
+        colors: { type: GraphQLList(GraphQLString) },
+        category: { type: GraphQLString },
+        rare: { type: GraphQLBoolean },
+        description: { type: GraphQLString },
+        productStatus: { type: GraphQLString },
+        quantity: { type: GraphQLInt },
+        review: { type: GraphQLList(GraphQLString) },
+        stock: { type: GraphQLList(GraphQLString) },
+        imageIds: { type: GraphQLList(GraphQLID) }
       },
       resolve(parent, args, context) {
         if (!context.customer || !(context.customer.role === 'admin')) return null;
@@ -212,6 +234,7 @@ const mutation = new GraphQLObjectType({
           postDate: args.postDate,
           priceLists: args.priceList,
           size: args.size,
+          quantity: args.quantity,
           colors: args.colors,
           category: args.category,
           rare: args.rare,
@@ -233,6 +256,7 @@ const mutation = new GraphQLObjectType({
         postDate: { type: GraphQLString },
         priceLists: { type: GraphQLList(PriceListTypeInput) },
         size: { type: SizeTypeInput },
+        quantity:{type:GraphQLInt},
         colors: { type: GraphQLList(GraphQLString) },
         category: { type: GraphQLString },
         rare: { type: GraphQLBoolean },
@@ -251,6 +275,7 @@ const mutation = new GraphQLObjectType({
               postDate: args.postDate,
               priceLists: args.priceLists,
               size: args.size,
+              quantity: args.quantity,
               colors: args.colors,
               category: args.category,
               rare: args.rare,
@@ -283,11 +308,11 @@ const mutation = new GraphQLObjectType({
         password: { type: GraphQLNonNull(GraphQLString) },
         firstName: { type: GraphQLNonNull(GraphQLString) },
         lastName: { type: GraphQLNonNull(GraphQLString) },
-        phone: { type: GraphQLNonNull(GraphQLString) },
-        status: { type: GraphQLNonNull(GraphQLString) },
-        role: { type: GraphQLNonNull(GraphQLString) },
-        wechatId: { type: GraphQLNonNull(GraphQLString) },
-        paypalId: { type: GraphQLNonNull(GraphQLString) },
+        phone: { type: GraphQLString },
+        status: { type: GraphQLString },
+        role: { type: GraphQLString },
+        wechatId: { type: GraphQLString },
+        paypalId: { type: GraphQLString },
         creditCards: { type: GraphQLList(GraphQLID) },
         address: { type: GraphQLList(GraphQLID) },
         orders: { type: GraphQLList(GraphQLID) },
@@ -319,7 +344,7 @@ const mutation = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
       resolve(parent, args, context) {
-        if (!context.customer || (context.customer.role === 'admin')) return null;
+        if (!context.customer || !(context.customer.role === 'admin')) return null;
         return Customer.findByIdAndRemove(args.id);
       }
     },
@@ -377,7 +402,7 @@ const mutation = new GraphQLObjectType({
           password: hashedPassword,
           firstName: args.firstName,
           lastName: args.lastName,
-          role: 'customer',
+          role: 'user',
         });
         const token = generateToken(customer.id)
         customer.save();
@@ -420,10 +445,61 @@ const mutation = new GraphQLObjectType({
 
         const token = generateToken(customer.id)
 
-        return { token, userId: customer.id }
+        return { token: token, userId: customer.id }
       }
     },
 
+    // login with google account
+    loginWithGoogle: {
+      type: LoginReturnType,
+      args: {
+        idToken: { type: GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, args) {
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        // can't return the token in then, so put token and userId in a variable and return it in the end
+        let token
+        let userId
+        await client.verifyIdToken({
+          idToken: args.idToken,
+          audience: process.env.GOOGLE_CLIENT_ID,
+        }).then( async (response) => {
+          console.log(response)
+          const payload = response.getPayload();
+          console.log(payload)
+          const googleId = payload['sub'];
+          const firstName = payload['given_name'];
+          const lastName = payload['family_name'];
+          const email = payload['email'];
+          const avatar = payload['picture'];
+          const role = 'user';
+          // TODO replace the password with a random string
+          const password = (await randomBytesPromisified(20)).toString("hex");
+          const hashedPassword = await argon2.hash(password);
+          const customer = new Customer({
+            email: email,
+            password: hashedPassword,
+            firstName: firstName,
+            lastName: lastName,
+            role: role,
+            googleId: googleId,
+            avatar: avatar,
+          });
+          token = generateToken(customer.id)
+          userId = customer.id
+          customer.save();
+
+          console.log(token, customer.id)
+        }).catch(err => {
+          console.log(err)
+        })
+        return { token, userId }
+
+      }
+    },
+
+
+    // request reset password url and send email to the user with the reset password url
     requestReset: {
       type: RequestReturnType,
       args: {
@@ -463,7 +539,16 @@ const mutation = new GraphQLObjectType({
         }
 
         try {
-          await transporter.sendMail({...resetMailOptions, to: args.email});
+          await transporter.sendMail({
+            from: process.env.EMAIL_ACCOUNT,
+            to: args.email,
+            subject: "Password Reset",
+            text: `Hello, ${result.firstName}! \n
+          You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
+          Please click on the following link, or paste this into your browser to complete the process:\n\n
+          http://succulentbackend.azurewebsites.net/reset/${resetToken}&uuid=${result.id}\n\n
+          If you did not request this, please ignore this email and your password will remain unchanged.\n`
+          });
         } catch (error) {
           console.log(error);
           return false;
@@ -472,6 +557,7 @@ const mutation = new GraphQLObjectType({
       }
     },
 
+    // reset password with the reset token and the new password
     resetPassword: {
       type: RequestReturnType,
       args: {
@@ -479,8 +565,9 @@ const mutation = new GraphQLObjectType({
         password: { type: GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, args) {
-        const payload = verifyToken(args.token)
-        if (!payload) {
+        const [token, uuid] = args.token.split('&uuid=')
+        const customer = await Customer.findById(uuid)
+        if (token !== customer.resetToken || !customer) {
           return {
             errors: [
               {
@@ -490,27 +577,30 @@ const mutation = new GraphQLObjectType({
             ],
           };
         }
-        const customer = await Customer.findById(payload.id)
-        if (!customer) {
-          return {
-            errors: [
-              {
-                field: "token",
-                message: "that token is invalid",
-              },
-            ],
-          };
-        }
+        // TODO: check if token is expired
+        // if (Date.now() > customer.resetTokenExpiry) {
+        //   return {
+        //     errors: [
+        //       {
+        //         field: "token",
+        //         message: "that token has expired",
+        //       },
+        //     ],
+        //   };
+        // }
 
         const hashedPassword = await argon2.hash(args.password);
         customer.password = hashedPassword
+        customer.resetToken = null
+        customer.resetTokenExpiry = null
         await customer.save()
-        return {result: true};
+        return { result: true };
       }
     },
 
   }
-});
+}
+)
 
 const schema = new GraphQLSchema({
   query: RootQuery,

@@ -59,8 +59,11 @@ const CustomerType = new GraphQLObjectType({
         return parent.cartIds.map((cardId)=>ProductInCart.findById(cardId));
       }
     },
+    avatar: { type: GraphQLString },
+    googleId: { type: GraphQLString },
     resetToken: { type: GraphQLString },
     resetTokenExpiry: { type: MyDate },
+    createdAt: { type: MyDate },
   }),
 });
 

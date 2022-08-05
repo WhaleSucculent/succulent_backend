@@ -14,7 +14,7 @@ const OrderSchema = new mongoose.Schema({
   totalTax: { type: Number },
   totalAmount: { type: Number },
   
-});
+}, { timestamps: true });
 
 const Order = mongoose.model('Order', OrderSchema);
 export default Order;
