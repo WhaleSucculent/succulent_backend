@@ -35,7 +35,7 @@ const newPay = async (req, res) => {
       // }?is_stripe=true&is_cart=${currentRoute.includes(
       //   "cart"
       // )}&product_ids=${productIds}`,
-      success_url: `${domain}${currentRoute}?is_stripe=true`,
+      success_url: `${domain}${currentRoute}`,
       cancel_url: `${req.headers.origin}${cancelRoute}`,
     });
 

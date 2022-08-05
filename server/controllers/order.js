@@ -19,7 +19,7 @@ import mongoose from 'mongoose';
       orderStatus: req.body.orderStatus,
       productsInCartIds: mongoose.Types.ObjectId.isValid(req.body.productsInCartIds) ? req.body.productsInCartIds : mongoose.Types.ObjectId(req.params.productsInCartIds),
       deliveryId: mongoose.Types.ObjectId.isValid(req.body.deliveryId) ? req.body.deliveryId : mongoose.Types.ObjectId(req.params.deliveryId),
-      paymentId: mongoose.Types.ObjectId.isValid(req.body.paymentId) ? req.body.deliveryId : mongoose.Types.ObjectId(req.params.paymentId),
+      paymentId: mongoose.Types.ObjectId.isValid(req.body.paymentId) ? req.body.paymentId : mongoose.Types.ObjectId(req.params.paymentId),
       itemAmount: req.body.itemAmount,
       totalTax: req.body.totalTax,
       totalAmount: req.body.totalAmount
