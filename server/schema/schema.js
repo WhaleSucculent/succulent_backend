@@ -225,7 +225,8 @@ const mutation = new GraphQLObjectType({
         quantity: { type: GraphQLInt },
         review: { type: GraphQLList(GraphQLString) },
         stock: { type: GraphQLList(GraphQLString) },
-        imageIds: { type: GraphQLList(GraphQLID) }
+        imageIds: { type: GraphQLList(GraphQLID) },
+        imageLinks: {type: GraphQLList(GraphQLString)},
       },
       resolve(parent, args, context) {
         if (!context.customer || !(context.customer.role === 'admin')) return null;
@@ -242,7 +243,8 @@ const mutation = new GraphQLObjectType({
           productStatus: args.productStatus,
           reviewIds: args.review,
           stockIds: args.stock,
-          imageIds: args.imageIds
+          imageIds: args.imageIds,
+          imageLinks: args.imageLinks
         });
         return product.save();
       }
