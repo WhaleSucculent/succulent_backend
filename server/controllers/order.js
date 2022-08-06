@@ -17,7 +17,7 @@ import mongoose from 'mongoose';
       billingAddressId: mongoose.Types.ObjectId.isValid(req.body.billingAddressId) ? req.body.billingAddressId : mongoose.Types.ObjectId(req.params.billingAddressId),
       orderDate: req.body.orderDate,
       orderStatus: req.body.orderStatus,
-      productsInCartIds: mongoose.Types.ObjectId.isValid(req.body.productsInCartIds) ? req.body.productsInCartIds : mongoose.Types.ObjectId(req.params.productsInCartIds),
+      productsInCartIds: req.body.productsInCartIds.map(productsInCartId => { return mongoose.Types.ObjectId.isValid(productsInCartId) ? productsInCartId : mongoose.Types.ObjectId(productsInCartId)} ), 
       deliveryId: mongoose.Types.ObjectId.isValid(req.body.deliveryId) ? req.body.deliveryId : mongoose.Types.ObjectId(req.params.deliveryId),
       paymentId: mongoose.Types.ObjectId.isValid(req.body.paymentId) ? req.body.paymentId : mongoose.Types.ObjectId(req.params.paymentId),
       itemAmount: req.body.itemAmount,
