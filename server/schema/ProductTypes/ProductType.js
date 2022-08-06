@@ -116,6 +116,12 @@ const ProductType = new GraphQLObjectType({
         return parent.stockIds.map((stockId) => Stock.findById(stockId));
       },
     },
+    imageLinks: {
+      type: new GraphQLList(GraphQLString),
+      resolve(parent, args) {
+        return parent.imageLinks;
+      }
+    },
     image: {
       type: new GraphQLList(ImageType),
       resolve(parent, args) {

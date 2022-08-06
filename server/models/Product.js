@@ -24,7 +24,9 @@ const ProductSchema = new mongoose.Schema(
     colors: [{ type: String }],
     reviewIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     stockIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stock' }],
+    imageLinks: [{ type: String }],
     imageIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
+
 
   },
   { timestamps: true }
