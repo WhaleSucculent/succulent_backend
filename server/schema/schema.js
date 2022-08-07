@@ -15,7 +15,7 @@ import Product from '../models/Product.js';
 import Address from '../models/Address.js';
 import Order from '../models/Order.js';
 import AddressType from './OrderTypes/AddressType.js';
-import { ProductType, SizeTypeInput, PriceListTypeInput } from './ProductTypes/ProductType.js';
+import { ProductType, SizeTypeInput, PriceListTypeInput, ImageInputType } from './ProductTypes/ProductType.js';
 import CustomerType from './CustomerTypes/CustomerType.js';
 import Customer from '../models/Customer.js';
 import OrderType from './OrderTypes/OrderType.js';
@@ -29,6 +29,7 @@ import argon2 from 'argon2'
 import RequestReturnType from './CustomerTypes/RequestReturnType.js';
 import { resetMailOptions, transporter, resetToken, resetTokenExpiry, randomBytesPromisified } from '../utils/mailSetup.js';
 import { OAuth2Client } from 'google-auth-library';
+import Image from '../models/Image.js';
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -225,28 +226,56 @@ const mutation = new GraphQLObjectType({
         quantity: { type: GraphQLInt },
         review: { type: GraphQLList(GraphQLString) },
         stock: { type: GraphQLList(GraphQLString) },
-        imageIds: { type: GraphQLList(GraphQLID) },
-        imageLinks: {type: GraphQLList(GraphQLString)},
+        images: { type: GraphQLList(ImageInputType) },
+        imageLinks: { type: GraphQLList(GraphQLString) },
       },
-      resolve(parent, args, context) {
+      async resolve(parent, args, context) {
         if (!context.customer || !(context.customer.role === 'admin')) return null;
-        const product = new Product({
-          name: args.name,
-          postDate: args.postDate,
-          priceLists: args.priceList,
-          size: args.size,
-          quantity: args.quantity,
-          colors: args.colors,
-          category: args.category,
-          rare: args.rare,
-          description: args.description,
-          productStatus: args.productStatus,
-          reviewIds: args.review,
-          stockIds: args.stock,
-          imageIds: args.imageIds,
-          imageLinks: args.imageLinks
-        });
-        return product.save();
+
+        
+        // const imageArray = await args.images.map(image => {
+        //   const createdImage = new Image({
+        //     name: image.name,
+        //     imageLink: image.imageLink,
+        //     category: image.category,
+        //   })
+
+        //   return createdImage.save()
+
+        // })
+        // const imagIds = await imageArray.then(imgs => {
+        //   return imgs.map(img => {
+        //     return img._id
+        //   })
+        // })
+
+        const product = await new Image({
+          name: args.images[0].name,
+          imageLink: args.images[0].imageLink,
+          category: args.images[0].category,
+        }).save().then(img => {
+
+          const product = new Product({
+            name: args.name,
+            postDate: args.postDate,
+            priceLists: args.priceList,
+            size: args.size,
+            quantity: args.quantity,
+            colors: args.colors,
+            category: args.category,
+            rare: args.rare,
+            description: args.description,
+            productStatus: args.productStatus,
+            reviewIds: args.review,
+            stockIds: args.stock,
+            imageIds: img.id,
+            imageLinks: args.imageLinks
+          }); 
+          return product.save();
+        })
+        console.log(product)
+
+        return product
       }
     },
     //Update a project
@@ -258,7 +287,7 @@ const mutation = new GraphQLObjectType({
         postDate: { type: GraphQLString },
         priceLists: { type: GraphQLList(PriceListTypeInput) },
         size: { type: SizeTypeInput },
-        quantity:{type:GraphQLInt},
+        quantity: { type: GraphQLInt },
         colors: { type: GraphQLList(GraphQLString) },
         category: { type: GraphQLString },
         rare: { type: GraphQLBoolean },
@@ -465,7 +494,7 @@ const mutation = new GraphQLObjectType({
         await client.verifyIdToken({
           idToken: args.idToken,
           audience: process.env.GOOGLE_CLIENT_ID,
-        }).then( async (response) => {
+        }).then(async (response) => {
           console.log(response)
           const payload = response.getPayload();
           console.log(payload)

@@ -70,6 +70,17 @@ const PriceListTypeInput = new GraphQLInputObjectType({
     postDate: { type: MyDate },
   })
 });
+
+// Image type
+const ImageInputType = new GraphQLInputObjectType({
+  name: 'ImageInput',
+  fields: () => ({
+    name: { type: GraphQLString },
+    category: { type: GraphQLString },
+    imageLink: { type: GraphQLString },
+  })
+})
+
 // Product Type
 const ProductType = new GraphQLObjectType({
   name: 'Product',
@@ -131,4 +142,4 @@ const ProductType = new GraphQLObjectType({
   }),
 });
 
-export { ProductType, SizeTypeInput, PriceListTypeInput};
+export { ProductType, SizeTypeInput, PriceListTypeInput, ImageInputType };
