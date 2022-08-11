@@ -1,4 +1,5 @@
 import { GraphQLObjectType, GraphQLID, GraphQLString } from 'graphql';
+// TODO refactor with same name in redux
 const AddressType = new GraphQLObjectType({
   name: 'Address',
   fields: () => ({

@@ -30,6 +30,7 @@ import RequestReturnType from './CustomerTypes/RequestReturnType.js';
 import { resetMailOptions, transporter, resetToken, resetTokenExpiry, randomBytesPromisified } from '../utils/mailSetup.js';
 import { OAuth2Client } from 'google-auth-library';
 import Image from '../models/Image.js';
+import Payment from '../models/Payment.js';
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -232,7 +233,7 @@ const mutation = new GraphQLObjectType({
       async resolve(parent, args, context) {
         if (!context.customer || !(context.customer.role === 'admin')) return null;
 
-        
+
         // const imageArray = await args.images.map(image => {
         //   const createdImage = new Image({
         //     name: image.name,
@@ -270,7 +271,7 @@ const mutation = new GraphQLObjectType({
             stockIds: args.stock,
             imageIds: img.id,
             imageLinks: args.imageLinks
-          }); 
+          });
           return product.save();
         })
         console.log(product)
@@ -434,6 +435,7 @@ const mutation = new GraphQLObjectType({
           firstName: args.firstName,
           lastName: args.lastName,
           role: 'user',
+          status: 'active',
         });
         const token = generateToken(customer.id)
         customer.save();
@@ -515,6 +517,7 @@ const mutation = new GraphQLObjectType({
             role: role,
             googleId: googleId,
             avatar: avatar,
+            status: 'active',
           });
           token = generateToken(customer.id)
           userId = customer.id
@@ -629,8 +632,123 @@ const mutation = new GraphQLObjectType({
       }
     },
 
+    // update my email address and password
+    updateMyEmailPassword: {
+      type: RequestReturnType,
+      args: {
+        email: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, args, context) {
+        if (!context.customer.id !== args.id) {
+          return {
+            errors: [
+              {
+                field: "id",
+                message: "you are not authorized to update this customer",
+              },
+            ],
+          };
+        }
+
+        const customer = await Customer.findById(args.id)
+        if (!customer) {
+          return {
+            errors: [
+              {
+                field: "id",
+                message: "that user doesn't exist",
+              },
+            ],
+          };
+        }
+        customer.email = args.email
+        const hashedPassword = await argon2.hash(args.password);
+        customer.password = hashedPassword
+        await customer.save()
+        return { result: true };
+      }
+
+    },
+
+    // update my address information
+    updateMyAddress: {
+      type: RequestReturnType,
+      args: {
+        id: { type: GraphQLString },
+        firstName: { type: GraphQLString },
+        lastName: { type: GraphQLString },
+        address: { type: GraphQLString },
+        apartment: { type: GraphQLString },
+        city: { type: GraphQLString },
+        country: { type: GraphQLString },
+        state: { type: GraphQLString },
+        zipcode: { type: GraphQLString },
+      },
+      async resolve(parent, args, context) {
+        if (!context.customer.id !== args.id) {
+          return {
+            errors: [
+              {
+                field: "id",
+                message: "you are not authorized to update this customer",
+              },
+            ],
+          };
+        }
+
+        const customer = await Customer.findById(args.id)
+        if (!customer) {
+          return {
+            errors: [
+              {
+                field: "id",
+                message: "that user doesn't exist",
+              },
+            ],
+          };
+        }
+        customer.firstName = args.firstName
+        customer.lastName = args.lastName
+        customer.address = args.address
+        customer.apartment = args.apartment
+        customer.city = args.city
+        customer.country = args.country
+        customer.state = args.state
+        customer.zipcode = args.zipcode
+        await customer.save()
+        return { result: true };
+      }
+    },
+
+
+      // delete my payment information
+      deleteMyPayment: {
+        type: RequestReturnType,
+        args: {
+          id: { type: GraphQLString }
+        },
+        async resolve(parent, args, context) {
+          
+          const payment = await Payment.findById(args.id)
+          if (!payment) {
+            return {
+              errors: [
+                {
+                  field: "id",
+                  message: "that payment doesn't exist",
+                },
+              ],
+            };
+          }
+          await payment.remove()
+        }
+      }
+
+
+
+    }
   }
-}
 )
 
 const schema = new GraphQLSchema({
