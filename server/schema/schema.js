@@ -580,7 +580,7 @@ const mutation = new GraphQLObjectType({
             text: `Hello, ${result.firstName}! \n
           You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
           Please click on the following link, or paste this into your browser to complete the process:\n\n
-          http://succulentbackend.azurewebsites.net/reset/${resetToken}&uuid=${result.id}\n\n
+          https://succulent-frontend.vercel.app/reset/${resetToken}&uuid=${result.id}\n\n
           If you did not request this, please ignore this email and your password will remain unchanged.\n`
           });
         } catch (error) {
