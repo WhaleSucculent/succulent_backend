@@ -10,6 +10,15 @@ const ProductSchema = new mongoose.Schema(
       height: { type: Number },
       radius: { type: Number },
     },
+    stocks: [
+      {
+        total: { type: Number },
+        action: { type: String },
+        actionAmount: { type: Number },
+        actionDate: { type: Date },
+        actionPrice: { type: Number },
+      }
+    ],
     category: { type: String },
     rare: { type: Boolean },
     description: { type: String },

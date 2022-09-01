@@ -42,8 +42,6 @@ app.use(
   })
 );
 
-
-
 // app.use(cookieParser());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -68,6 +66,12 @@ if (process.env.NODE_ENV === 'production') {
 
 // Restful APIs
 app.use('/api/checkout', routes);
+
+app.use('/test', (req, res) => {
+  res.send('test');
+})
+
+//
 
 
 // when the address don't meet / and /api/products, it will call the app.use(notFound), app.use(notFound) will pass the error to errorHandler

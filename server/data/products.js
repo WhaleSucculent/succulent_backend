@@ -9,17 +9,40 @@ const products = [
       height: 37,
       radius: 81,
     },
+    stock:[
+      {
+        totl: 10,
+        action: 'add',
+        actionAmount: 10,
+        actionDate: '2021-9-11',
+        actionPrice: 50,
+      },
+      {
+        total: 20,
+        action: 'add',
+        actionAmount: 10,
+        actionDate: '2021-9-12',
+        actionPrice: 50,
+      },
+      {
+        total: 28,
+        action: 'buy',
+        actionAmount: 2,
+        actionDate: '2021-9-13',
+        actionPrice: 20,
+      }
+    ],
     category: 'Succulents',
     rare: false,
     description: 'Dark Ice is a compact rosettes succulent which has spoon-shaped leaves. The greyish blue leaves can turn to reddish and deep purple when stressed, which is very charming',
     productStatus: 'In Stock',
     priceLists: [
       {
-        price: 5.19,
+        price: 10,
         postDate: '2021-9-11',
       },
       {
-        price: 2,
+        price: 13,
         postDate: '2021-3-11',
       },
     ],
@@ -39,6 +62,22 @@ const products = [
       height: 46,
       radius: 78,
     },
+    stock: [
+      {
+        total: 10,
+        action: 'add',
+        actionAmount: 10,
+        actionDate: '2021-9-11',
+        actionPrice: 100,
+      },
+      {
+        total: 20,
+        action: 'add',
+        actionAmount: 10,
+        actionDate: '2021-9-12',
+        actionPrice: 100,
+      }
+    ],
     category: 'Succulent',
     rare: false,
     description: 'Baby finger is rare Korean Succulent. Its leaves are chubby like babys fingers, typically soft to vivid lavendar color, will turn bright mangos and pink color when they grow well, such as insufficient light and the leaves will be grayish green.The leaves are covered in a powdery wax called farina that protects them in full sun and gives a nice, matte finish.',

@@ -3,23 +3,17 @@ import {
   GraphQLID,
   GraphQLString,
   GraphQLInt,
-  GraphQLScalarType,
   GraphQLBoolean,
   GraphQLList,
   GraphQLFloat,
   GraphQLInputObjectType,
 } from 'graphql';
-import Customer from '../../models/Customer.js';
 import Image from '../../models/Image.js';
-import Product from '../../models/Product.js';
 import Review from '../../models/Review.js';
-import Stock from '../../models/Stock.js';
-import CustomerType from '../CustomerTypes/CustomerType.js';
 import ImageType from '../ImageTypes/ImageType.js';
-//import { dateScalar } from '../utilScalar.js';
 import { MyDate } from '../DataScalar.js';
 import ReviewType from './ReviewType.js';
-import StockType from './StockType.js';
+
 
 // Size type
 const SizeType = new GraphQLObjectType({
@@ -41,16 +35,14 @@ const SizeTypeInput = new GraphQLInputObjectType({
   })
 });
 // Stock Type
-const StocksType = new GraphQLObjectType({
+const StockType = new GraphQLObjectType({
   name: 'Stock',
   fields: () => ({
-    id: { type: GraphQLID },
-    product: { type: ProductType, resolve(parent, args) {
-        return Product.findById(parent.productId)
-    }},
-    amount: { type: GraphQLInt },
+    total: { type: GraphQLFloat },
     action: { type: GraphQLString },
-    createTime: { type: MyDate },
+    actionAmount: { type: GraphQLFloat },
+    actionDate: { type: MyDate },
+    actionPrice: { type: GraphQLFloat },
   }),
 });
 
@@ -100,6 +92,12 @@ const ProductType = new GraphQLObjectType({
         return parent.size;
       },
     },
+    stocks: {
+      type: new GraphQLList(StockType),
+      resolve(parent, args) {
+        return parent.stocks;
+      }
+    },
     quantity: { type: GraphQLInt },
     // images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     colors: {
@@ -119,12 +117,6 @@ const ProductType = new GraphQLObjectType({
       type: new GraphQLList(ReviewType),
       resolve(parent, args) {
         return parent.reviewIds.map((reviewId) => Review.findById(reviewId));
-      },
-    },
-    stock: {
-      type: new GraphQLList(StockType),
-      resolve(parent, args) {
-        return parent.stockIds.map((stockId) => Stock.findById(stockId));
       },
     },
     imageLinks: {
