@@ -87,6 +87,7 @@ app.listen(
   )
 );
 
+// cicd
 // async function main() {
 //   console.log('Azure Blob storage starting...');
 
