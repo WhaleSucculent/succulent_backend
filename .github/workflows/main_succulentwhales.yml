@@ -63,7 +63,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'SucculentBackend'
+          app-name: 'succulentwhales'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_50870F2302DD4625B6659CEE4DD4BABA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4A34731F2D7B47CFB00D9A060B3F098A }}
           package: .
