@@ -11,7 +11,7 @@ const products = [
     },
     stock:[
       {
-        totl: 10,
+        total: 10,
         action: 'add',
         actionAmount: 10,
         actionDate: '2021-9-11',
@@ -78,7 +78,7 @@ const products = [
         actionPrice: 100,
       }
     ],
-    category: 'Succulent',
+    category: 'Succulents',
     rare: false,
     description: 'Baby finger is rare Korean Succulent. Its leaves are chubby like babys fingers, typically soft to vivid lavendar color, will turn bright mangos and pink color when they grow well, such as insufficient light and the leaves will be grayish green.The leaves are covered in a powdery wax called farina that protects them in full sun and gives a nice, matte finish.',
     productStatus: 'In Stock',
@@ -221,6 +221,193 @@ const products = [
     reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
     stockIds: ['62a99eb18b5abb7c51972216'],
     imageIds: ['62c699029493c7a44f46fb84']
+  },
+
+  {
+
+    name: 'Echeveria Scarlet Wing',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Succulents',
+    rare: false,
+    description:
+      'due to its red edge leaves, also called red edge echeveria. Its leaves are long and thin, formed close to a rosette, blooming in spring. Mebina is easy to grow to cluster, which is suitable for making small pot combinations.',
+    productStatus: 'In Stock',
+    priceLists: [
+      {
+        price: 4.99,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 1.99,
+        postDate: '2021-3-11',
+      },
+    ],
+    quantity: 17,
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb83']
+  },
+  {
+
+    name: 'Echeveria Subcorymbosa',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Succulents',
+    rare: false,
+    description:
+      'due to its red edge leaves, also called red edge echeveria. Its leaves are long and thin, formed close to a rosette, blooming in spring. Mebina is easy to grow to cluster, which is suitable for making small pot combinations.',
+    productStatus: 'In Stock',
+    priceLists: [
+      {
+        price: 4.99,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 1.99,
+        postDate: '2021-3-11',
+      },
+    ],
+    quantity: 17,
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb82']
+  },
+  {
+
+    name: 'Echeveria Sensationedd',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Succulents',
+    rare: false,
+    description:
+      'due to its red edge leaves, also called red edge echeveria. Its leaves are long and thin, formed close to a rosette, blooming in spring. Mebina is easy to grow to cluster, which is suitable for making small pot combinations.',
+    productStatus: 'In Stock',
+    priceLists: [
+      {
+        price: 4.99,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 1.99,
+        postDate: '2021-3-11',
+      },
+    ],
+    quantity: 17,
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb81']
+  },
+  {
+
+    name: 'Pachyphytu Machucae',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Succulents',
+    rare: false,
+    description:
+      'due to its red edge leaves, also called red edge echeveria. Its leaves are long and thin, formed close to a rosette, blooming in spring. Mebina is easy to grow to cluster, which is suitable for making small pot combinations.',
+    productStatus: 'In Stock',
+    priceLists: [
+      {
+        price: 4.99,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 1.99,
+        postDate: '2021-3-11',
+      },
+    ],
+    quantity: 17,
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb80']
+  },
+  {
+
+    name: 'Rosularia Platyphylla',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Succulents',
+    rare: false,
+    description:
+      'due to its red edge leaves, also called red edge echeveria. Its leaves are long and thin, formed close to a rosette, blooming in spring. Mebina is easy to grow to cluster, which is suitable for making small pot combinations.',
+    productStatus: 'In Stock',
+    priceLists: [
+      {
+        price: 4.99,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 1.99,
+        postDate: '2021-3-11',
+      },
+    ],
+    quantity: 17,
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb79']
+  },
+  {
+
+    name: 'Rraptoveria Debbi',
+    postDate: '10/13/2021',
+    size: {
+      width: 81,
+      length: 62,
+      height: 98,
+      radius: 87,
+    },
+    category: 'Succulents',
+    rare: false,
+    description:
+      'due to its red edge leaves, also called red edge echeveria. Its leaves are long and thin, formed close to a rosette, blooming in spring. Mebina is easy to grow to cluster, which is suitable for making small pot combinations.',
+    productStatus: 'In Stock',
+    priceLists: [
+      {
+        price: 4.99,
+        postDate: '2021-9-11',
+      },
+      {
+        price: 1.99,
+        postDate: '2021-3-11',
+      },
+    ],
+    quantity: 17,
+    colors: ['Orange', 'Aquamarine', 'Red', 'Teal'],
+    reviewIds: ['62a994a78e7fe122350e1d01', '62a994a78e7fe122350e1d06'],
+    stockIds: ['62a99eb18b5abb7c51972216'],
+    imageIds: ['62c699029493c7a44f46fb78']
   },
 ];
 
